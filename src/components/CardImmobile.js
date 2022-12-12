@@ -30,7 +30,9 @@ function CardImmobile(props) {
                         color: 'black',
                         fontSize: 16,
                         marginBottom: 8
-                    }}>{props.title}</Text>
+                    }}>
+                        {props.title}
+                    </Text>
                     <View style={{
                         flexDirection: "row",
                         alignItems: "center",
@@ -40,7 +42,9 @@ function CardImmobile(props) {
                         <Text style={{
                             marginLeft: 8,
                             fontFamily: 'Montserrat-Regular'
-                        }}>{props.location}</Text>
+                        }}>
+                            {props.location}
+                        </Text>
                     </View>
                     <View style={{
                         flexDirection: "row",
@@ -50,28 +54,61 @@ function CardImmobile(props) {
                         <Text style={{
                             fontFamily: 'Montserrat-Bold',
                             color: 'black'
-                        }}>R${props.value}</Text>
+                        }}>
+                            R${props.value}
+                        </Text>
                         <Text style={{
                             fontFamily: 'Montserrat-Bold',
                             color: 'red'
-                        }}>{props.type}</Text>
+                        }}>
+                            {props.type}
+                        </Text>
                     </View>
-                    <View style={{ flexDirection: "row", justifyContent: 'space-between' }}>
-                        <View style={{ flexDirection: "row", alignItems: "center" }}>
-                            <Image source={bedIcon} style={{ marginRight: 5 }} />
-                            <Text>{props.bedQuantity}</Text>
+                    <View style={{
+                        flexDirection: "row",
+                        justifyContent: 'space-between'
+                    }}>
+                        <View style={{
+                            flexDirection: "row",
+                            alignItems: "center"
+                        }}>
+                            <Image source={bedIcon} style={{
+                                marginRight: 5
+                            }} />
+                            <Text>
+                                {props.bedQuantity}
+                            </Text>
                         </View>
-                        <View style={{ flexDirection: "row", alignItems: "center" }}>
-                            <Image source={sizeIcon} style={{ marginRight: 5 }} />
-                            <Text>{props.size}</Text>
+                        <View style={{
+                            flexDirection: "row",
+                            alignItems: "center"
+                        }}>
+                            <Image source={sizeIcon} style={{
+                                marginRight: 5
+                            }} />
+                            <Text>
+                                {props.size}
+                            </Text>
                         </View>
-                        <View style={{ flexDirection: "row", alignItems: "center" }}>
-                            <Image source={bethIcon} style={{ marginRight: 5 }} />
-                            <Text>{props.bethQuantity}</Text>
+                        <View style={{
+                            flexDirection: "row",
+                            alignItems: "center"
+                        }}>
+                            <Image source={bethIcon} style={{
+                                marginRight: 5
+                            }} />
+                            <Text>
+                                {props.bethQuantity}
+                            </Text>
                         </View>
-                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                        <View style={{
+                            flexDirection: "row",
+                            alignItems: "center"
+                        }}>
                             <Image source={garageIcon} style={{ marginRight: 5 }} />
-                            <Text>{props.garageQuantity}</Text>
+                            <Text>
+                                {props.garageQuantity}
+                            </Text>
                         </View>
                     </View>
                 </View>
