@@ -7,7 +7,7 @@ function SearchBar() {
     return (
         <View style={style.searchBar}>
             <Image source={searchIcon} />
-            <TextInput style={style.textInput} placeholder='O que você procura' />
+            <TextInput style={style.textInput} placeholder='O que você procura' placeholderTextColor={'#737373'} />
             <TouchableOpacity style={style.button}>
                 <Image source={buttonSearchIcon} />
             </TouchableOpacity>

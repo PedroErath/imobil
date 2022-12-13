@@ -14,7 +14,7 @@ function BannerHome() {
 
 const style = StyleSheet.create({
     bannerContainer: {
-        flex: 1
+        height: 160
     },
     backgroundImage: {
         width: '100%',

@@ -11,11 +11,15 @@ import CardImmobile from "./components/CardImmobile";
 function App() {
   return (
     <View style={style.container}>
-      <BannerHome />
-      <View style={style.bodyContainer}>
-        <ImageBackground source={imageBackgroundFull} style={style.imageBackgroundFull}>
-          <SearchBar />
-          <ScrollView>
+      <ScrollView>
+        
+        <BannerHome /> 
+
+        <View style={style.bodyContainer}>
+          <ImageBackground source={imageBackgroundFull} style={style.imageBackgroundFull}>
+
+            <SearchBar /> 
+
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{
               height: 78,
               flexDirection: "row",
@@ -27,6 +31,7 @@ function App() {
               <CardCategory icon={require('./images/house-apartament-icon.png')} name='Sala Comercial' />
               <CardCategory icon={require('./images/house-two-floors-icon.png')} name='Duplex' />
             </ScrollView>
+
             <View style={{
               marginHorizontal: 23,
               flexDirection: "row",
@@ -38,6 +43,7 @@ function App() {
                 <Image source={ArrowIcon} />
               </TouchableOpacity>
             </View>
+
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{
               flexDirection: 'row',
               paddingLeft: 7,
@@ -67,6 +73,7 @@ function App() {
                 garageQuantity='2'
               />
             </ScrollView>
+
             <View style={{
               marginHorizontal: 23,
               flexDirection: "row",
@@ -78,6 +85,7 @@ function App() {
                 <Image source={ArrowIcon} />
               </TouchableOpacity>
             </View>
+
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{
               flexDirection: 'row',
               paddingLeft: 7,
@@ -107,9 +115,11 @@ function App() {
                 garageQuantity='2'
               />
             </ScrollView>
-          </ScrollView>
-        </ImageBackground>
-      </View>
+
+          </ImageBackground>
+        </View>
+
+      </ScrollView>
     </View>
   )
 }

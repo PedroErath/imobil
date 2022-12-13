@@ -41,7 +41,8 @@ function CardImmobile(props) {
                         <Image resizeMode="cover" source={locationIcon} />
                         <Text style={{
                             marginLeft: 8,
-                            fontFamily: 'Montserrat-Regular'
+                            fontFamily: 'Montserrat-Regular',
+                            color: '#737373'
                         }}>
                             {props.location}
                         </Text>
@@ -75,7 +76,10 @@ function CardImmobile(props) {
                             <Image source={bedIcon} style={{
                                 marginRight: 5
                             }} />
-                            <Text>
+                            <Text style={{
+                                fontFamily: 'Montserrat-Regular',
+                                color: 'black'
+                            }}>
                                 {props.bedQuantity}
                             </Text>
                         </View>
@@ -86,7 +90,10 @@ function CardImmobile(props) {
                             <Image source={sizeIcon} style={{
                                 marginRight: 5
                             }} />
-                            <Text>
+                            <Text style={{
+                                fontFamily: 'Montserrat-Regular',
+                                color: 'black'
+                            }}>
                                 {props.size}
                             </Text>
                         </View>
@@ -97,7 +104,10 @@ function CardImmobile(props) {
                             <Image source={bethIcon} style={{
                                 marginRight: 5
                             }} />
-                            <Text>
+                            <Text style={{
+                                fontFamily: 'Montserrat-Regular',
+                                color: 'black'
+                            }}>
                                 {props.bethQuantity}
                             </Text>
                         </View>
@@ -106,7 +116,10 @@ function CardImmobile(props) {
                             alignItems: "center"
                         }}>
                             <Image source={garageIcon} style={{ marginRight: 5 }} />
-                            <Text>
+                            <Text style={{
+                                fontFamily: 'Montserrat-Regular',
+                                color: 'black'
+                            }}>
                                 {props.garageQuantity}
                             </Text>
                         </View>
