@@ -1,10 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import locationIcon from '../images/location-icon.png';
-import bedIcon from '../images/bed-icon.png';
-import sizeIcon from '../images/size-icon.png';
-import bethIcon from '../images/beth-icon.png';
-import garageIcon from '../images/garage-icon.png';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 function CardImmobile(props) {
     return (
@@ -20,7 +16,10 @@ function CardImmobile(props) {
             borderColor: '#000'
         }}>
             <View>
-                <Image source={props.imageBanner} />
+                <Image source={props.imageBanner} style={{
+                    borderTopLeftRadius: 5,
+                    borderTopRightRadius: 5
+                }} />
                 <View style={{
                     paddingHorizontal: 16,
                     paddingVertical: 8
@@ -38,7 +37,7 @@ function CardImmobile(props) {
                         alignItems: "center",
                         marginBottom: 8
                     }}>
-                        <Image resizeMode="cover" source={locationIcon} />
+                        <MaterialCommunityIcons name="map-marker" size={24} color='#197B5C'/>
                         <Text style={{
                             marginLeft: 8,
                             fontFamily: 'Montserrat-Regular',
@@ -73,7 +72,7 @@ function CardImmobile(props) {
                             flexDirection: "row",
                             alignItems: "center"
                         }}>
-                            <Image source={bedIcon} style={{
+                            <MaterialCommunityIcons name="bed-king" size={20} color='#197B5C' style={{
                                 marginRight: 5
                             }} />
                             <Text style={{
@@ -87,23 +86,23 @@ function CardImmobile(props) {
                             flexDirection: "row",
                             alignItems: "center"
                         }}>
-                            <Image source={sizeIcon} style={{
-                                marginRight: 5
-                            }} />
+                            <MaterialCommunityIcons name="arrow-expand" size={20} color='#197B5C' style={{
+                                    marginRight: 5
+                                }} />
                             <Text style={{
                                 fontFamily: 'Montserrat-Regular',
                                 color: 'black'
                             }}>
-                                {props.size}
+                                {props.size}m&#178;
                             </Text>
                         </View>
                         <View style={{
                             flexDirection: "row",
                             alignItems: "center"
                         }}>
-                            <Image source={bethIcon} style={{
-                                marginRight: 5
-                            }} />
+                            <MaterialCommunityIcons name="shower" size={20} color='#197B5C' style={{
+                                    marginRight: 5
+                                }} />
                             <Text style={{
                                 fontFamily: 'Montserrat-Regular',
                                 color: 'black'
@@ -115,7 +114,9 @@ function CardImmobile(props) {
                             flexDirection: "row",
                             alignItems: "center"
                         }}>
-                            <Image source={garageIcon} style={{ marginRight: 5 }} />
+                            <MaterialCommunityIcons name="garage-open" size={20} color='#197B5C' style={{
+                                marginRight: 5
+                            }} />
                             <Text style={{
                                 fontFamily: 'Montserrat-Regular',
                                 color: 'black'
