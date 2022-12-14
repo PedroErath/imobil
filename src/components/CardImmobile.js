@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import InfosImmobileIcons from "./InfosImmobileIcons";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 function CardImmobile(props) {
     return (
@@ -64,67 +65,16 @@ function CardImmobile(props) {
                             {props.type}
                         </Text>
                     </View>
-                    <View style={{
-                        flexDirection: "row",
-                        justifyContent: 'space-between'
-                    }}>
-                        <View style={{
-                            flexDirection: "row",
-                            alignItems: "center"
-                        }}>
-                            <MaterialCommunityIcons name="bed-king" size={20} color='#197B5C' style={{
-                                marginRight: 5
-                            }} />
-                            <Text style={{
-                                fontFamily: 'Montserrat-Regular',
-                                color: 'black'
-                            }}>
-                                {props.bedQuantity}
-                            </Text>
-                        </View>
-                        <View style={{
-                            flexDirection: "row",
-                            alignItems: "center"
-                        }}>
-                            <MaterialCommunityIcons name="arrow-expand" size={20} color='#197B5C' style={{
-                                    marginRight: 5
-                                }} />
-                            <Text style={{
-                                fontFamily: 'Montserrat-Regular',
-                                color: 'black'
-                            }}>
-                                {props.size}m&#178;
-                            </Text>
-                        </View>
-                        <View style={{
-                            flexDirection: "row",
-                            alignItems: "center"
-                        }}>
-                            <MaterialCommunityIcons name="shower" size={20} color='#197B5C' style={{
-                                    marginRight: 5
-                                }} />
-                            <Text style={{
-                                fontFamily: 'Montserrat-Regular',
-                                color: 'black'
-                            }}>
-                                {props.bethQuantity}
-                            </Text>
-                        </View>
-                        <View style={{
-                            flexDirection: "row",
-                            alignItems: "center"
-                        }}>
-                            <MaterialCommunityIcons name="garage-open" size={20} color='#197B5C' style={{
-                                marginRight: 5
-                            }} />
-                            <Text style={{
-                                fontFamily: 'Montserrat-Regular',
-                                color: 'black'
-                            }}>
-                                {props.garageQuantity}
-                            </Text>
-                        </View>
-                    </View>
+                    
+                    <InfosImmobileIcons 
+                        bedQuantity={props.bedQuantity}
+                        size={props.size}
+                        bethQuantity={props.bethQuantity}
+                        garageQuantity={props.garageQuantity}
+                        iconSize={20}
+                        fontSize={14}
+                    />
+
                 </View>
             </View>
         </TouchableOpacity>

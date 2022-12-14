@@ -2,7 +2,7 @@ import React from "react";
 import { TouchableOpacity, Image, Text } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-function CardCategory(props) {
+function ButtonCategory(props) {
     return (
         <TouchableOpacity style={{
             height: 45,
@@ -24,4 +24,4 @@ function CardCategory(props) {
     )
 };
 
-export default CardCategory;
+export default ButtonCategory;

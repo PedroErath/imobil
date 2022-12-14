@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, ImageBackground } from 'react-native';
 import backgroundImage from '../images/home-background-top-image.jpg';
 
-function BannerHome() {
+function BannerHomeTop() {
     return (
         <View style={{
             height: 160
@@ -27,4 +27,4 @@ function BannerHome() {
     )
 }
 
-export default BannerHome;
+export default BannerHomeTop;
