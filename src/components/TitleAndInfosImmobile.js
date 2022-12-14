@@ -64,7 +64,7 @@ function TitleAndInfosImmobile() {
             </View>
             <View style={{
                 paddingHorizontal: 23,
-                marginBottom: 23
+                marginBottom: 32
             }}>
                 <InfosIconsImmobile
                     bedQuantity={2}

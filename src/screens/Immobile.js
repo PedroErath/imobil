@@ -1,7 +1,10 @@
 import React from "react";
-import { View, ScrollView, TouchableOpacity, Text } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import ImagesCarouselImmobile from "../components/ImagesCarouselImmobile";
 import TitleAndInfosImmobile from "../components/TitleAndInfosImmobile";
+import ImmobileAmenities from "../components/ImmobileAmenities";
+import ImmobileLocation from "../components/ImmobileLocation";
+import BottomButton from "../components/BottomButton";
 
 function Immobile() {
     return (
@@ -11,17 +14,20 @@ function Immobile() {
                     flex: 1,
                     backgroundColor: '#ddd'
                 }}>
+
                     <ImagesCarouselImmobile />
 
-                    <View>
+                    <TitleAndInfosImmobile />
 
-                        <TitleAndInfosImmobile />
+                    <ImmobileAmenities />
 
-                        <Text>Comodidades</Text>
+                    <ImmobileLocation />
 
-                    </View>
                 </View>
             </ScrollView>
+
+            <BottomButton />
+            
         </View>
     )
 }
