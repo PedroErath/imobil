@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import InfosImmobileIcons from "./InfosImmobileIcons";
+import InfosIconsImmobile from "./InfosIconsImmobile";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 function CardImmobile(props) {
@@ -17,7 +17,9 @@ function CardImmobile(props) {
             borderColor: '#000'
         }}>
             <View>
-                <Image source={props.imageBanner} style={{
+                <Image source={require('../images/house-primary.jpg')} resizeMode='stretch' style={{
+                    width: 267,
+                    height: 160,
                     borderTopLeftRadius: 5,
                     borderTopRightRadius: 5
                 }} />
@@ -65,8 +67,8 @@ function CardImmobile(props) {
                             {props.type}
                         </Text>
                     </View>
-                    
-                    <InfosImmobileIcons 
+
+                    <InfosIconsImmobile 
                         bedQuantity={props.bedQuantity}
                         size={props.size}
                         bethQuantity={props.bethQuantity}

@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text } from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-function InfosImmobileIcons(props) {
+function InfosIconsImmobile(props) {
     return (
         <View style={{
             flexDirection: "row",
@@ -72,4 +72,4 @@ function InfosImmobileIcons(props) {
     )
 }
 
-export default InfosImmobileIcons;
+export default InfosIconsImmobile;
