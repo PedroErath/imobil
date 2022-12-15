@@ -4,6 +4,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Home from "../screens/Home";
 import Contact from "../screens/Contact";
 import Immobile from "../screens/Immobile";
+import Realtor from "../screens/Realtor";
 
 const TabNavigation = createBottomTabNavigator();
 
@@ -21,8 +22,13 @@ function Tab() {
                         break;
                     case 'Contato':
                         iconName = focused
-                        ? 'account'
-                        : 'account-outline';
+                        ? 'phone-forward'
+                        : 'phone-forward-outline';
+                        break;
+                    case 'Corretor':
+                        iconName = focused
+                        ? 'account-wrench'
+                        : 'account-wrench-outline';
                         break;
                     default:
                         break;
@@ -36,6 +42,7 @@ function Tab() {
         })}>
             <TabNavigation.Screen name="Home" component={Home}/>
             <TabNavigation.Screen name="Contato" component={Contact} />
+            <TabNavigation.Screen name="Corretor" component={Realtor} />
             <TabNavigation.Screen name="Imovel" component={Immobile} options={{tabBarItemStyle: {display: "none"}}}/>
         </TabNavigation.Navigator>
     )

@@ -1,15 +1,15 @@
 import React from "react";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import Tab from "./navigation/Tab";
-import Immobile from "./screens/Immobile";
+import Realtor from "./screens/Realtor";
 
 function App() {
   return (
     <SafeAreaView style={{
       flex: 1
     }}>
-      {/* <Immobile /> */}
+      {/* <Realtor /> */}
       <NavigationContainer>
         <Tab />
       </NavigationContainer>

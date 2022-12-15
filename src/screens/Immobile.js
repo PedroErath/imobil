@@ -5,6 +5,7 @@ import TitleAndInfosImmobile from "../components/TitleAndInfosImmobile";
 import ImmobileAmenities from "../components/ImmobileAmenities";
 import ImmobileLocation from "../components/ImmobileLocation";
 import BottomButton from "../components/BottomButton";
+import ImmobileRealtor from "../components/ImmobileRealtor";
 
 function Immobile(props) {
     return (
@@ -22,6 +23,8 @@ function Immobile(props) {
                     <ImmobileAmenities />
 
                     <ImmobileLocation />
+
+                    <ImmobileRealtor />
 
                 </View>
             </ScrollView>

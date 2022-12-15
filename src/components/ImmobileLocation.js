@@ -5,7 +5,7 @@ function ImmobileLocation() {
     return (
         <View style={{
             paddingHorizontal: 23,
-            marginBottom: 75
+            marginBottom: 23
         }}>
             <Text style={{
                 fontFamily: 'Montserrat-Bold',
