@@ -9,10 +9,10 @@ function App() {
     <SafeAreaView style={{
       flex: 1
     }}>
-      <Immobile />
-      {/* <NavigationContainer>
+      {/* <Immobile /> */}
+      <NavigationContainer>
         <Tab />
-      </NavigationContainer> */}
+      </NavigationContainer>
     </SafeAreaView>
   )
 }

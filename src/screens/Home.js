@@ -6,7 +6,7 @@ import ButtonCategory from "../components/ButtonCategory";
 import CardImmobile from "../components/CardImmobile";
 import TitleSectionCardImmobile from "../components/TitleSectionCardImmobile";
 
-function Home() {
+function Home(props) {
   return (
     <View>
       <ScrollView>
@@ -41,6 +41,7 @@ function Home() {
             marginTop: 24
           }}>
             <CardImmobile
+              {...props}
               imageBanner={require('../images/house-banner-card.jpg')}
               title='Casa - Ana Nery'
               location='Rua Curitiba, 590, Ana Nery - Santa Cruz do Sul - RS'
@@ -52,6 +53,7 @@ function Home() {
               garageQuantity='2'
             />
             <CardImmobile
+              {...props}
               imageBanner={require('../images/house-banner-card.jpg')}
               title='Casa - Ana Nery'
               location='Rua Curitiba, 590, Ana Nery - Santa Cruz do Sul - RS'
@@ -73,6 +75,7 @@ function Home() {
             marginTop: 24
           }}>
             <CardImmobile
+              {...props}
               imageBanner={require('../images/house-banner-card.jpg')}
               title='Casa - Ana Nery'
               location='Rua Curitiba, 590, Ana Nery - Santa Cruz do Sul - RS'
@@ -84,6 +87,7 @@ function Home() {
               garageQuantity='2'
             />
             <CardImmobile
+              {...props}
               imageBanner={require('../images/house-banner-card.jpg')}
               title='Casa - Ana Nery'
               location='Rua Curitiba, 590, Ana Nery - Santa Cruz do Sul - RS'

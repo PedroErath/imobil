@@ -5,7 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 function CardImmobile(props) {
     return (
-        <TouchableOpacity style={{
+        <TouchableOpacity onPress={() => props.navigation.navigate('Imovel')} style={{
             marginHorizontal: 16,
             flexDirection: "row",
             justifyContent: "space-between",

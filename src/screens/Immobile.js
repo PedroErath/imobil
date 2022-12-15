@@ -6,7 +6,7 @@ import ImmobileAmenities from "../components/ImmobileAmenities";
 import ImmobileLocation from "../components/ImmobileLocation";
 import BottomButton from "../components/BottomButton";
 
-function Immobile() {
+function Immobile(props) {
     return (
         <View>
             <ScrollView>
@@ -15,7 +15,7 @@ function Immobile() {
                     backgroundColor: '#ddd'
                 }}>
 
-                    <ImagesCarouselImmobile />
+                    <ImagesCarouselImmobile {...props}/>
 
                     <TitleAndInfosImmobile />
 
