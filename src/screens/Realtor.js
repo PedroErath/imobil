@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
 
-function Realtor(props) {
+function Realtor() {
+
+    const [user, setUser] = useState({})
+
     return (
         <View style={{
             flex: 1,
@@ -29,27 +32,36 @@ function Realtor(props) {
                     width: '100%',
                     paddingHorizontal: 23
                 }}>
-                    <TextInput placeholder="Usuário" placeholderTextColor='#000' style={{
-                        backgroundColor: '#fff',
-                        width: '100%',
-                        borderRadius: 10,
-                        paddingHorizontal: 15,
-                        marginBottom: 8
-                    }} />
-                    <TextInput placeholder="Senha" placeholderTextColor='#000' style={{
-                        backgroundColor: '#fff',
-                        width: '100%',
-                        borderRadius: 10,
-                        paddingHorizontal: 15,
-                        marginBottom: 8
-                    }} />
+                    <TextInput onChangeText={e => setUser({ ...user, email: e })}
+                        placeholder="Usuário"
+                        placeholderTextColor='#000'
+                        style={{
+                            backgroundColor: '#fff',
+                            width: '100%',
+                            borderRadius: 10,
+                            paddingHorizontal: 15,
+                            marginBottom: 8
+                        }} />
+                    <TextInput onChangeText={e => setUser({ ...user, passwordt: e })}
+                        placeholder="Senha"
+                        placeholderTextColor='#000'
+                        secureTextEntry={true}
+                        style={{
+                            backgroundColor: '#fff',
+                            width: '100%',
+                            borderRadius: 10,
+                            paddingHorizontal: 15,
+                            marginBottom: 8
+                        }} />
 
                     <TouchableOpacity style={{
                         width: '100%',
                         backgroundColor: '#197B5C',
                         padding: 15,
                         borderRadius: 10,
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        elevation: 15,
+                        shadowColor: '#000'
                     }}>
                         <Text style={{
                             fontFamily: 'Montserrat-Bold',

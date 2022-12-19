@@ -32,27 +32,34 @@ function Contact() {
                         color: '#197B5C',
                         fontFamily: 'Montserrat-Bold',
                     }}>WhatsApp</Text> preencha o formulário abaixo, logo você receberá uma mensagem de nossa equipe.</Text>
-                    <TextInput placeholder="Nome" placeholderTextColor='#000' style={{
-                        backgroundColor: '#fff',
-                        width: '100%',
-                        borderRadius: 10,
-                        paddingHorizontal: 15,
-                        marginBottom: 8
-                    }} />
-                    <TextInput placeholder="Email" placeholderTextColor='#000' style={{
-                        backgroundColor: '#fff',
-                        width: '100%',
-                        borderRadius: 10,
-                        paddingHorizontal: 15,
-                        marginBottom: 8
-                    }} />
-                    <TextInput placeholder="Telefone" placeholderTextColor='#000' style={{
-                        backgroundColor: '#fff',
-                        width: '100%',
-                        borderRadius: 10,
-                        paddingHorizontal: 15,
-                        marginBottom: 8
-                    }} />
+                    <TextInput placeholder="Nome"
+                        placeholderTextColor='#000'
+                        style={{
+                            backgroundColor: '#fff',
+                            width: '100%',
+                            borderRadius: 10,
+                            paddingHorizontal: 15,
+                            marginBottom: 8
+                        }} />
+                    <TextInput placeholder="Email"
+                        placeholderTextColor='#000'
+                        style={{
+                            backgroundColor: '#fff',
+                            width: '100%',
+                            borderRadius: 10,
+                            paddingHorizontal: 15,
+                            marginBottom: 8
+                        }} />
+                    <TextInput placeholder="Telefone"
+                        keyboardType="phone-pad"
+                        placeholderTextColor='#000'
+                        style={{
+                            backgroundColor: '#fff',
+                            width: '100%',
+                            borderRadius: 10,
+                            paddingHorizontal: 15,
+                            marginBottom: 8
+                        }} />
 
                     <TouchableOpacity style={{
                         width: '100%',
