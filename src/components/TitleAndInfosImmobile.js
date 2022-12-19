@@ -34,10 +34,7 @@ function TitleAndInfosImmobile() {
                         <Text style={{
                             fontFamily: 'Montserrat-Bold',
                             color: '#000'
-                        }}>4.5 <Text style={{
-                            fontFamily: 'Montserrat-Regular',
-                            color: '#737373'
-                        }}>(542)</Text></Text>
+                        }}>4.5</Text>
                     </View>
                 </View>
                 <View style={{
