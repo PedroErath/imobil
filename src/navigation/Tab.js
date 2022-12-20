@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Home from "../screens/Home";
 import Contact from "../screens/Contact";
@@ -9,16 +10,24 @@ import RealtorLogin from "../screens/RealtorLogin";
 import ImmobileRegister from "../screens/ImmobileRegister";
 import MyImmobiles from "../screens/MyImmobiles";
 import RealtorProfile from "../screens/RealtorProfile";
+import UserRegister from "../screens/UserRegister";
+import Users from "../screens/Users";
 
 const TabNavigation = createBottomTabNavigator();
 
 function Tab() {
 
-    const [user, setUser] = useState()
+    const [userLogged, setUserLogged] = useState()
     const [initializing, setInitializing] = useState(true)
 
-    function onAuthStateChanged(user) {
-        setUser(user);
+    async function onAuthStateChanged(user) {
+
+        if (user) {
+            const userInfo = await firestore().collection('users').doc(user.uid).get()
+            setUserLogged(userInfo.data())
+        }else{
+            setUserLogged(user)
+        }
         initializing ? setInitializing(false) : null
     }
 
@@ -30,7 +39,7 @@ function Tab() {
     if (!initializing) {
         return (
             <TabNavigation.Navigator
-                initialRouteName={user ? "Meus Imoveis" : "Home"}
+                initialRouteName={!userLogged ? "Home" : userLogged.admin ? "Registrar Usuario" : "Meus Imoveis"}
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({ focused, color, size }) => {
                         let iconName;
@@ -73,17 +82,19 @@ function Tab() {
                         return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
                     },
                     tabBarActiveTintColor: '#197B5C',
-                    tabBarLabelStyle: { fontSize: 14, fontFamily: 'Montserrat-Bold' },
+                    tabBarLabelStyle: { fontSize: 14, fontFamily: 'Montserrat-Bold', paddingBottom: 5 },
+                    tabBarStyle: { height: 50, paddingTop: 5 },
                     headerShown: false,
-                })}><>
-                    <TabNavigation.Screen name="Home" component={Home} options={{ tabBarItemStyle: { display: !user ? null : 'none' } }} />
-                    <TabNavigation.Screen name="Contato" component={Contact} options={{ tabBarItemStyle: { display: !user ? null : 'none' } }} />
-                    <TabNavigation.Screen name="Corretor" component={RealtorLogin} options={{ tabBarItemStyle: { display: !user ? null : 'none' } }} />
-                    <TabNavigation.Screen name="Meus Imoveis" component={MyImmobiles} options={{ tabBarItemStyle: { display: user ? null : 'none' } }} />
-                    <TabNavigation.Screen name="Registrar Imovel" component={ImmobileRegister} options={{ tabBarItemStyle: { display: user ? null : 'none' } }} />
-                    <TabNavigation.Screen name="Perfil" component={RealtorProfile} options={{ tabBarItemStyle: { display: user ? null : 'none' } }} />
-                    <TabNavigation.Screen name="Imovel" component={Immobile} options={{ tabBarItemStyle: { display: 'none' }, tabBarStyle: { display: 'none' } }} />
-                </>
+                })}>
+                <TabNavigation.Screen name="Home" component={Home} options={{ tabBarItemStyle: { display: !userLogged ? null : 'none' } }} />
+                <TabNavigation.Screen name="Contato" component={Contact} options={{ tabBarItemStyle: { display: !userLogged ? null : 'none' } }} />
+                <TabNavigation.Screen name="Corretor" component={RealtorLogin} options={{ tabBarItemStyle: { display: !userLogged ? null : 'none' } }} />
+                <TabNavigation.Screen name="Meus Imoveis" component={MyImmobiles} options={{ tabBarItemStyle: { display: !userLogged ? 'none' : userLogged.admin ? 'none' : null } }} />
+                <TabNavigation.Screen name="Registrar Imovel" component={ImmobileRegister} options={{ tabBarItemStyle: { display: !userLogged ? 'none' : userLogged.admin ? 'none' : null } }} />
+                <TabNavigation.Screen name="Perfil" component={RealtorProfile} options={{ tabBarItemStyle: { display: !userLogged ? 'none' : userLogged.admin ? 'none' : null } }} />
+                <TabNavigation.Screen name="Registrar Usuario" component={UserRegister} options={{ tabBarItemStyle: { display: !userLogged ? 'none' : userLogged.admin ? null : 'none' } }} />
+                <TabNavigation.Screen name="Usuarios" component={Users} options={{ tabBarItemStyle: { display: !userLogged ? 'none' : userLogged.admin ? null : 'none' } }} />
+                <TabNavigation.Screen name="Imovel" component={Immobile} options={{ tabBarItemStyle: { display: 'none' }, tabBarStyle: { display: 'none' } }} />
             </TabNavigation.Navigator>
         )
     }
