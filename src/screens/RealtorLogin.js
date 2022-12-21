@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore'
 
 function RealtorLogin(props) {
 
@@ -11,8 +12,10 @@ function RealtorLogin(props) {
         if (user.email && user.password)
             auth()
                 .signInWithEmailAndPassword(user.email, user.password)
-                .then((user) => {
-                    props.navigation.navigate('Meus Imoveis')
+                .then( async (user) => {
+                    const userInfo = await firestore().collection('users').doc(user.user.uid).get()
+                    userInfo.data().admin ? props.navigation.navigate('Registrar Usuario') 
+                    : props.navigation.navigate('Meus Imoveis')
                     setUser({})
                     setResponseMessage({})
                 })
@@ -89,21 +92,21 @@ function RealtorLogin(props) {
                         textAlign: 'center',
                         marginBottom: 5
                     }}>{responseMessage.msg}</Text>
-                    <TouchableOpacity style={{
-                        width: '100%',
-                        backgroundColor: '#197B5C',
-                        padding: 15,
-                        borderRadius: 10,
-                        alignItems: 'center',
-                        elevation: 15,
-                        shadowColor: '#000'
-                    }}>
-                        <Text onPress={Login}
-                            style={{
-                                fontFamily: 'Montserrat-Bold',
-                                fontSize: 20,
-                                color: '#fff'
-                            }}>Entrar</Text>
+                    <TouchableOpacity onPress={Login}
+                        style={{
+                            width: '100%',
+                            backgroundColor: '#197B5C',
+                            padding: 15,
+                            borderRadius: 10,
+                            alignItems: 'center',
+                            elevation: 15,
+                            shadowColor: '#000'
+                        }}>
+                        <Text style={{
+                            fontFamily: 'Montserrat-Bold',
+                            fontSize: 20,
+                            color: '#fff'
+                        }}>Entrar</Text>
                     </TouchableOpacity>
 
                 </View>

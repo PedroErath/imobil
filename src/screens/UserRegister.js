@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
 import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore'
+import firestore from '@react-native-firebase/firestore';
 import CheckBox from "@react-native-community/checkbox";
+import LogoutButton from "../components/LogoutButton";
 
 function UserRegister(props) {
 
@@ -142,6 +143,7 @@ function UserRegister(props) {
                     </TouchableOpacity>
 
                 </View>
+                <LogoutButton {...props} />
             </ImageBackground>
         </View>
     )

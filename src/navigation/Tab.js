@@ -75,6 +75,16 @@ function Tab() {
                                     ? 'account'
                                     : 'account-outline';
                                 break;
+                            case 'Registrar Usuario':
+                                iconName = focused
+                                    ? 'account-plus'
+                                    : 'account-plus-outline';
+                                break;
+                            case 'Usuarios':
+                                iconName = focused
+                                    ? 'account-multiple'
+                                    : 'account-multiple-outline';
+                                break;
                             default:
                                 break;
                         }
