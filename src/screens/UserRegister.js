@@ -17,21 +17,30 @@ function UserRegister(props) {
                 .createUserWithEmailAndPassword(user.email, user.password)
                 .then((userCredential) => {
                     firestore().collection('users').doc(userCredential.user.uid).set({
+                        uid: userCredential.user.uid,
                         name: user.name,
                         email: user.email,
                         admin: toggleCheckBox
                     })
-                    .then(() => {
-                        props.navigation.navigate('Usuarios')
-                        setUser({})
-                        setResponseMessage({})
-                    })
+                        .then(() => {
+                            toggleCheckBox ? props.navigation.navigate('Usuarios')
+                            : props.navigation.navigate('Perfil')
+                            setUser({})
+                            setResponseMessage({})
+                        })
                 })
                 .catch(error => {
-                    setResponseMessage({
-                        success: false,
-                        msg: 'Email e/ou senha inválidos'
-                    })
+                    if (error.code == 'auth/email-already-in-use') {
+                        setResponseMessage({
+                            success: false,
+                            msg: 'Este email ja está em uso'
+                        })
+                    } else {
+                        setResponseMessage({
+                            success: false,
+                            msg: 'Email e/ou senha inválidos'
+                        })
+                    }
                 })
         else {
             setResponseMessage({
@@ -53,7 +62,6 @@ function UserRegister(props) {
                 justifyContent: "center",
                 alignItems: "center"
             }}>
-
                 <Text style={{
                     fontSize: 64,
                     color: '#197B5C',
@@ -69,7 +77,7 @@ function UserRegister(props) {
                     width: '100%',
                     paddingHorizontal: 23
                 }}>
-                    <TextInput value={user.email}
+                    <TextInput value={user.name}
                         onChangeText={e => setUser({ ...user, name: e })}
                         placeholder="Nome"
                         placeholderTextColor='#000'
@@ -125,16 +133,18 @@ function UserRegister(props) {
                         textAlign: 'center',
                         marginBottom: 5
                     }}>{responseMessage.msg}</Text>
-                    <TouchableOpacity style={{
-                        width: '100%',
-                        backgroundColor: '#197B5C',
-                        padding: 15,
-                        borderRadius: 10,
-                        alignItems: 'center',
-                        elevation: 15,
-                        shadowColor: '#000'
-                    }}>
-                        <Text onPress={Register}
+
+                    <TouchableOpacity onPress={Register}
+                        style={{
+                            width: '100%',
+                            backgroundColor: '#197B5C',
+                            padding: 15,
+                            borderRadius: 10,
+                            alignItems: 'center',
+                            elevation: 15,
+                            shadowColor: '#000'
+                        }}>
+                        <Text
                             style={{
                                 fontFamily: 'Montserrat-Bold',
                                 fontSize: 20,
