@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ImageBackground, TouchableOpacity, TextInput } from "react-native";
+import { View, Text, ImageBackground, TouchableOpacity, TextInput, Keyboard } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
-function ImmobileRegister() {
+function ImmobileRegister(props) {
 
     const [immobile, setImmobile] = useState({})
     const [userLogged, setUserLogged] = useState({})
@@ -23,7 +23,7 @@ function ImmobileRegister() {
         { label: 'Cozinha Americana', value: 'Cozinha Americana' },
     ])
 
-    //Multiple select Negotiation Type
+    //Select Negotiation Type
     const [negotiationType, setNegotiationType] = useState([])
     const [negotiationTypeOpen, setNegotiationTypeOpen] = useState(false)
     const [negotiationTypeItems, setNegotiationTypeItems] = useState([
@@ -32,7 +32,7 @@ function ImmobileRegister() {
         { label: 'Venda|Aluguel', value: 'Venda|Aluguel' },
     ])
 
-    //Multiple select Immobile Type
+    //Select Immobile Type
     const [immobileType, setImmobileType] = useState([])
     const [immobileTypeOpen, setImmobileTypeOpen] = useState(false)
     const [immobileTypeItems, setImmobileTypeItems] = useState([
@@ -40,6 +40,14 @@ function ImmobileRegister() {
         { label: 'Apartamento', value: 'Apartamento' },
         { label: 'Duplex', value: 'Duplex' },
         { label: 'Sala Comercial', value: 'Sala Comercial' },
+    ])
+    //Select City
+    const [city, setCity] = useState([])
+    const [cityOpen, setCityOpen] = useState(false)
+    const [cityItems, setCityItems] = useState([
+        { label: 'Santa Cruz do Sul - RS', value: 'Santa Cruz do Sul - RS' },
+        { label: 'Vera Cruz - RS', value: 'Vera Cruz - RS' },
+        { label: 'Rio Pardo - RS', value: 'Rio Pardo - RS' }
     ])
 
     useEffect(() => {
@@ -49,15 +57,22 @@ function ImmobileRegister() {
         })
     }, [])
 
+    function onImmobileAndNegociationTypeOpen () {
+        Keyboard.dismiss()
+        setCityOpen(false)
+    }
+
     function Register() {
         if (immobile.title &&
-            immobile.location &&
+            immobile.address &&
+            immobile.district &&
             immobile.price &&
             immobile.ranking &&
             immobile.bedrooms &&
             immobile.restrooms &&
             immobile.garages &&
             immobile.size &&
+            city &&
             amenities &&
             negotiationType &&
             immobileType
@@ -66,7 +81,9 @@ function ImmobileRegister() {
                 .collection('properties')
                 .add({
                     title: immobile.title,
-                    location: immobile.location,
+                    address: immobile.address,
+                    district: immobile.district,
+                    city: city,
                     price: immobile.price,
                     ranking: immobile.ranking,
                     negotiationtype: negotiationType,
@@ -79,10 +96,8 @@ function ImmobileRegister() {
                     realtor: userLogged.name
                 })
                 .then(() => {
-                    setResponseMessage({
-                        success: true,
-                        msg: 'Deu certo'
-                    })
+                    props.navigation.navigate('Meus Imoveis')
+                    setCity([])
                     setAmenities([])
                     setImmobile({})
                     setNegotiationType([])
@@ -129,16 +144,53 @@ function ImmobileRegister() {
                             marginBottom: 8
                         }}
                     />
-                    <TextInput onChangeText={e => setImmobile({ ...immobile, location: e })}
-                        placeholder="Localização"
-                        placeholderTextColor='#000'
-                        style={{
-                            backgroundColor: '#fff',
-                            width: '100%',
-                            borderRadius: 10,
-                            paddingHorizontal: 15,
-                            marginBottom: 8
-                        }}
+                    <View style={{
+                        flexDirection: "row",
+                        justifyContent: 'space-between'
+                    }}>
+                        <TextInput onChangeText={e => setImmobile({ ...immobile, address: e })}
+                            placeholder="Rua, Número"
+                            placeholderTextColor='#000'
+                            style={{
+                                flex: 1,
+                                backgroundColor: '#fff',
+                                borderRadius: 10,
+                                paddingHorizontal: 15,
+                                marginBottom: 8,
+                                marginRight: 5
+                            }}
+                        />
+                        <TextInput onChangeText={e => setImmobile({ ...immobile, district: e })}
+                            placeholder="Bairro"
+                            placeholderTextColor='#000'
+                            style={{
+                                flex: 1,
+                                backgroundColor: '#fff',
+                                borderRadius: 10,
+                                paddingHorizontal: 15,
+                                marginBottom: 8
+                            }}
+                        />
+                    </View>
+                    <DropDownPicker style={{
+                        backgroundColor: '#fff',
+                        width: '100%',
+                        borderRadius: 10,
+                        paddingHorizontal: 15,
+                        marginBottom: 8,
+                        borderWidth: 0
+                    }}
+                        placeholder='Selecione a cidade'
+                        onOpen={Keyboard.dismiss}
+                        open={cityOpen}
+                        setOpen={setCityOpen}
+                        value={city}
+                        setValue={setCity}
+                        items={cityItems}
+                        setItems={setCityItems}
+                        mode="BADGE"
+                        badgeDotColors='#197B5C'
+                        dropDownDirection='TOP'
                     />
                     <View style={{
                         flexDirection: "row",
@@ -186,6 +238,7 @@ function ImmobileRegister() {
                                     marginBottom: 8,
                                     borderWidth: 0
                                 }}
+                                onOpen={onImmobileAndNegociationTypeOpen}
                                 open={negotiationTypeOpen}
                                 setOpen={setNegotiationTypeOpen}
                                 value={negotiationType}
@@ -206,6 +259,7 @@ function ImmobileRegister() {
                                     marginBottom: 8,
                                     borderWidth: 0
                                 }}
+                                onOpen={onImmobileAndNegociationTypeOpen}
                                 open={immobileTypeOpen}
                                 setOpen={setImmobileTypeOpen}
                                 value={immobileType}
@@ -277,6 +331,7 @@ function ImmobileRegister() {
                         placeholder='Selecione as comodidades'
                         searchPlaceholder="Pesquisar..."
                         open={amenitiesOpen}
+                        onOpen={Keyboard.dismiss}
                         setOpen={setAmenitiesOpen}
                         value={amenities}
                         setValue={setAmenities}

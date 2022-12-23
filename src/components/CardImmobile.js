@@ -44,7 +44,7 @@ function CardImmobile(props) {
                         <Text style={{
                             marginLeft: 8,
                             fontFamily: 'Montserrat-Regular',
-                            color: '#737373'
+                            color: '#737373',
                         }}>
                             {props.location}
                         </Text>

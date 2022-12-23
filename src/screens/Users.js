@@ -9,18 +9,25 @@ import LogoutButton from '../components/LogoutButton';
 function Users(props) {
 
     const [users, setUsers] = useState([])
+    const [search, setSearch] = useState('')
 
     useEffect(() => {
         firestore().collection('users').onSnapshot((querySnapshot) => {
             const docsArray = []
             querySnapshot.docs.map((doc) => {
-                docsArray.push(doc.data())
+                if(doc.data().name.indexOf(search) >= 0){
+                    docsArray.push(doc.data())
+                }
             })
             setUsers(docsArray)
         }, (error) => {
             console.log(error)
         })
-    }, [])
+    }, [search])
+
+    function SetStateSearchComponent (childData) {
+        setSearch(childData)
+    }
 
     return (
         <View style={{
@@ -39,7 +46,7 @@ function Users(props) {
                     marginBottom: 25
                 }}>Usuários</Text>
 
-                <SearchBar />
+                <SearchBar SetStateSearchComponent={SetStateSearchComponent} placeholder='Pesquise pelo nome' displayFilter='none' />
 
                 <ScrollView style={{
                     width: '100%',

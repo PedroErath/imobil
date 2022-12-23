@@ -16,6 +16,7 @@ function UserRegister(props) {
             auth()
                 .createUserWithEmailAndPassword(user.email, user.password)
                 .then((userCredential) => {
+                    userCredential.user.updateProfile({displayName: user.name})
                     firestore().collection('users').doc(userCredential.user.uid).set({
                         uid: userCredential.user.uid,
                         name: user.name,

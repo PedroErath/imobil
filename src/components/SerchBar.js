@@ -1,8 +1,9 @@
 import React from "react";
-import { View, TextInput, Image, TouchableOpacity } from "react-native";
+import { View, TextInput, TouchableOpacity } from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-function SearchBar() {
+function SearchBar({ SetStateSearchComponent, placeholder, displayFilter }) {
+
     return (
         <View style={{
             backgroundColor: 'white',
@@ -17,16 +18,18 @@ function SearchBar() {
             shadowColor: 'black',
         }}>
             <MaterialCommunityIcons name="magnify" size={25} color='#fff' />
-            <TextInput style={{
-                flex: 1
-            }} placeholder='O que você procura' placeholderTextColor={'#737373'} />
-            <TouchableOpacity style={{
-                backgroundColor: '#197B5C',
-                padding: 5,
-                borderRadius: 5
-            }}>
-                <MaterialCommunityIcons name="tune-vertical-variant" size={25} color='#fff' />
-            </TouchableOpacity>
+            <TextInput onChangeText={e => SetStateSearchComponent(e)}
+                style={{
+                    flex: 1
+                }} placeholder={placeholder} placeholderTextColor={'#737373'} />
+                <TouchableOpacity style={{
+                    backgroundColor: '#197B5C',
+                    padding: 5,
+                    borderRadius: 5,
+                    display: displayFilter
+                }}>
+                    <MaterialCommunityIcons name="tune-vertical-variant" size={25} color='#fff' />
+                </TouchableOpacity>
         </View>
     )
 }

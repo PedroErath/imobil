@@ -16,7 +16,8 @@ function TitleSectionCardImmobile(props){
             }}>{props.title}</Text>
             <TouchableOpacity style={{
               flexDirection: "row",
-              alignItems: "center"
+              alignItems: "center",
+              display: props.button
             }}>
               <Text style={{
                 fontFamily: 'Montserrat-Bold',
