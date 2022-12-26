@@ -14,7 +14,7 @@ function MyImmobiles() {
     const userLogged = auth().currentUser
 
     useEffect(() => {
-        firestore().collection('properties').where('realtor', '==', userLogged.displayName).onSnapshot((querySnapshot) => {
+        firestore().collection('properties').where('realtor', '==', userLogged.uid).onSnapshot((querySnapshot) => {
             const ImmobilesArray = []
             querySnapshot.docs.map((doc) => {
                 if (doc.data().title.indexOf(search) >= 0) {

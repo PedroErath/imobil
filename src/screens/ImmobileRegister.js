@@ -7,7 +7,7 @@ import auth from '@react-native-firebase/auth';
 function ImmobileRegister(props) {
 
     const [immobile, setImmobile] = useState({})
-    const [userLogged, setUserLogged] = useState({})
+    const userLogged = auth().currentUser
     const [responseMessage, setResponseMessage] = useState({})
 
     // Multiple select Amenities
@@ -50,13 +50,6 @@ function ImmobileRegister(props) {
         { label: 'Rio Pardo - RS', value: 'Rio Pardo - RS' }
     ])
 
-    useEffect(() => {
-        auth().onAuthStateChanged(async (user) => {
-            const userInfo = await firestore().collection('users').doc(user.uid).get()
-            setUserLogged(userInfo.data())
-        })
-    }, [])
-
     function onImmobileAndNegociationTypeOpen () {
         Keyboard.dismiss()
         setCityOpen(false)
@@ -93,7 +86,7 @@ function ImmobileRegister(props) {
                     garages: immobile.garages,
                     size: immobile.size,
                     amenities: amenities,
-                    realtor: userLogged.name
+                    realtor: userLogged.uid
                 })
                 .then(() => {
                     props.navigation.navigate('Meus Imoveis')
