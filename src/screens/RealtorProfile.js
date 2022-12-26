@@ -12,16 +12,19 @@ function RealtorProfile(props) {
     const [profileImage, setProfileImage] = useState({})
     const [responseMessage, setResponseMessage] = useState({})
     const userLogged = auth().currentUser
-    const [inputUserName, setInputUserName] = useState({ editable: false, name: userLogged.displayName })
+    const [inputUserName, setInputUserName] = useState({})
 
     useEffect(() => {
         GetImageFromProfile()
+        userLogged ? setInputUserName({ editable: false, name: userLogged.displayName }) : null
         profileImage.fileName ? UploadImageToStorage() : null
     }, [profileImage])
 
-    async function GetImageFromProfile(){
-        const url = await storage().ref(userLogged.photoURL).getDownloadURL()
-        setProfileImage({uri: url})
+    async function GetImageFromProfile() {
+        if (userLogged) {
+            const url = await storage().ref(userLogged.photoURL).getDownloadURL()
+            setProfileImage({ uri: url })
+        }
     }
 
     function handleProfileImage() {
@@ -156,6 +159,7 @@ function RealtorProfile(props) {
                 }}>
                     <TextInput onChangeText={e => setInputUserName({ ...inputUserName, name: e })}
                         editable={inputUserName.editable}
+                        defaultValue={inputUserName.name}
                         style={{
                             fontFamily: 'Montserrat-Bold',
                             color: '#fff',
@@ -163,7 +167,7 @@ function RealtorProfile(props) {
                             marginRight: 10,
                             borderRadius: 10,
                             backgroundColor: inputUserName.editable ? '#737373' : null
-                        }}>{userLogged.displayName}</TextInput>
+                        }}></TextInput>
                     <TouchableOpacity onPress={e => { HandleInputUserName() }}>
                         <MaterialCommunityIcons name='pen' size={34} color='#fff' />
                     </TouchableOpacity>
@@ -174,12 +178,12 @@ function RealtorProfile(props) {
                     color: '#fff',
                     fontSize: 20,
                     marginRight: 10
-                }}>{userLogged.email}</Text>
+                }}>{userLogged ? userLogged.email : ''}</Text>
 
                 <TouchableOpacity
                     onPress={() => EditarDisplauNameCurrentUser()}
                     style={{
-                        display: userLogged.displayName == inputUserName.name ? 'none' : null,
+                        display: userLogged && userLogged.displayName == inputUserName.name ? 'none' : null,
                         marginTop: 16,
                         backgroundColor: '#197B5C',
                         padding: 15,

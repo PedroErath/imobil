@@ -18,7 +18,7 @@ function Home(props) {
           backgroundColor: '#ddd'
         }}>
 
-          <SearchBar />
+          <SearchBar placeholder='O que você procura' />
 
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{
             height: 78,
