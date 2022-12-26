@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Text, TextInput, Image, ImageBackground, Alert } from 'react-native';
 import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore'
-import storage from '@react-native-firebase/storage'
+import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import LogoutButton from '../components/LogoutButton';
@@ -12,10 +12,17 @@ function RealtorProfile(props) {
     const [profileImage, setProfileImage] = useState({})
     const [responseMessage, setResponseMessage] = useState({})
     const userLogged = auth().currentUser
+    const [inputUserName, setInputUserName] = useState({ editable: false, name: userLogged.displayName })
 
     useEffect(() => {
+        GetImageFromProfile()
         profileImage.fileName ? UploadImageToStorage() : null
     }, [profileImage])
+
+    async function GetImageFromProfile(){
+        const url = await storage().ref(userLogged.photoURL).getDownloadURL()
+        setProfileImage({uri: url})
+    }
 
     function handleProfileImage() {
         Alert.alert(
@@ -72,12 +79,16 @@ function RealtorProfile(props) {
     }
 
     function UploadImageToStorage() {
-        const reference = storage().ref(`realtors/${userLogged.displayName}-${profileImage.fileName}`)
+        const ext = profileImage.fileName.split('.').pop()
+        const reference = storage().ref(`realtors/${userLogged.uid}.${ext}`)
 
         reference.putFile(profileImage.uri).then(result => {
+            userLogged.updateProfile({
+                photoURL: reference.fullPath
+            })
             setResponseMessage({
                 success: true,
-                msg:'Foto de perfil atualizada'
+                msg: 'Foto de perfil atualizada'
             })
             setTimeout(() => {
                 setResponseMessage({})
@@ -85,6 +96,33 @@ function RealtorProfile(props) {
         })
             .catch(error => {
                 console.log(error)
+            })
+    }
+
+    function HandleInputUserName() {
+        setInputUserName({ ...inputUserName, editable: !inputUserName.editable })
+    }
+
+    function EditarDisplauNameCurrentUser() {
+        userLogged.updateProfile({
+            displayName: inputUserName.name
+        }).then(() => {
+            firestore().collection('users').doc(userLogged.uid).set({
+                name: inputUserName.name,
+            })
+                .then(() => {
+                    setInputUserName({ ...inputUserName, editable: !inputUserName.editable })
+                    setResponseMessage({
+                        success: true,
+                        msg: 'Nome de perfil atualizado'
+                    })
+                    setTimeout(() => {
+                        setResponseMessage({})
+                    }, 3000)
+                })
+        })
+            .catch(erro => {
+                console.log(erro)
             })
     }
 
@@ -116,37 +154,46 @@ function RealtorProfile(props) {
                     justifyContent: 'center',
                     borderRadius: 10
                 }}>
-                    <Text style={{
-                        fontFamily: 'Montserrat-Bold',
-                        color: '#fff',
-                        fontSize: 30,
-                        marginRight: 10
-                    }}>{userLogged.displayName}</Text>
-                    <TouchableOpacity>
-                        <MaterialCommunityIcons name='pen' size={34} color='#fff' />
-                    </TouchableOpacity>
-                </View>
-                <View style={{
-                    width: '100%',
-                    padding: 10,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: 10
-                }}>
-                    <TextInput editable={false} style={{
-                        fontFamily: 'Montserrat-Regular',
-                        color: '#fff',
-                        fontSize: 20,
-                        marginRight: 10
-                    }}>{userLogged.email}</TextInput>
-                    <TouchableOpacity>
+                    <TextInput onChangeText={e => setInputUserName({ ...inputUserName, name: e })}
+                        editable={inputUserName.editable}
+                        style={{
+                            fontFamily: 'Montserrat-Bold',
+                            color: '#fff',
+                            fontSize: 30,
+                            marginRight: 10,
+                            borderRadius: 10,
+                            backgroundColor: inputUserName.editable ? '#737373' : null
+                        }}>{userLogged.displayName}</TextInput>
+                    <TouchableOpacity onPress={e => { HandleInputUserName() }}>
                         <MaterialCommunityIcons name='pen' size={34} color='#fff' />
                     </TouchableOpacity>
                 </View>
 
                 <Text style={{
-                    fontFamily:'Montserrat-Regular',
+                    fontFamily: 'Montserrat-Regular',
+                    color: '#fff',
+                    fontSize: 20,
+                    marginRight: 10
+                }}>{userLogged.email}</Text>
+
+                <TouchableOpacity
+                    onPress={() => EditarDisplauNameCurrentUser()}
+                    style={{
+                        display: userLogged.displayName == inputUserName.name ? 'none' : null,
+                        marginTop: 16,
+                        backgroundColor: '#197B5C',
+                        padding: 15,
+                        borderRadius: 10
+                    }}>
+                    <Text style={{
+                        fontFamily: 'Montserrat-Bold',
+                        color: '#fff'
+                    }}>Editar</Text>
+                </TouchableOpacity>
+
+                <Text style={{
+                    marginTop: 10,
+                    fontFamily: 'Montserrat-Regular',
                     color: '#197B5C'
                 }}>{responseMessage.msg}</Text>
 
