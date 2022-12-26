@@ -59,7 +59,7 @@ function MyImmobiles() {
                                     title={immobile.title}
                                     location={`${immobile.address}, ${immobile.district} - ${immobile.city}`}
                                     value={immobile.price}
-                                    type={immobile.negociationtype}
+                                    type={immobile.negotiationtype}
                                     bedQuantity={immobile.bedrooms}
                                     size={immobile.size}
                                     bethQuantity={immobile.restrooms}
@@ -86,7 +86,7 @@ function MyImmobiles() {
                                     title={immobile.title}
                                     location={`${immobile.address}, ${immobile.district} - ${immobile.city}`}
                                     value={immobile.price}
-                                    type={immobile.negociationtype}
+                                    type={immobile.negotiationtype}
                                     bedQuantity={immobile.bedrooms}
                                     size={immobile.size}
                                     bethQuantity={immobile.restrooms}
@@ -113,7 +113,7 @@ function MyImmobiles() {
                                     title={immobile.title}
                                     location={`${immobile.address}, ${immobile.district} - ${immobile.city}`}
                                     value={immobile.price}
-                                    type={immobile.negociationtype}
+                                    type={immobile.negotiationtype}
                                     bedQuantity={immobile.bedrooms}
                                     size={immobile.size}
                                     bethQuantity={immobile.restrooms}

@@ -11,7 +11,7 @@ function CardImmobile(props) {
             justifyContent: "space-between",
             backgroundColor: 'white',
             width: 267,
-            height: 300,
+            height: 315,
             borderRadius: 5,
             elevation: 15,
             borderColor: '#000'
@@ -25,7 +25,10 @@ function CardImmobile(props) {
                 }} />
                 <View style={{
                     paddingHorizontal: 16,
-                    paddingVertical: 8
+                    paddingVertical: 8,
+                    width: 267,
+                    flex: 1,
+                    justifyContent: "space-between"
                 }}>
                     <Text style={{
                         fontFamily: 'Montserrat-Bold',
@@ -38,9 +41,10 @@ function CardImmobile(props) {
                     <View style={{
                         flexDirection: "row",
                         alignItems: "center",
-                        marginBottom: 8
+                        marginBottom: 8,
+
                     }}>
-                        <MaterialCommunityIcons name="map-marker" size={24} color='#197B5C'/>
+                        <MaterialCommunityIcons name="map-marker" size={24} color='#197B5C' />
                         <Text style={{
                             marginLeft: 8,
                             fontFamily: 'Montserrat-Regular',
@@ -68,7 +72,7 @@ function CardImmobile(props) {
                         </Text>
                     </View>
 
-                    <InfosIconsImmobile 
+                    <InfosIconsImmobile
                         bedQuantity={props.bedQuantity}
                         size={props.size}
                         bethQuantity={props.bethQuantity}
