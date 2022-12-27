@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import InfosIconsImmobile from "./InfosIconsImmobile";
 
-function TitleAndInfosImmobile() {
+function TitleAndInfosImmobile(props) {
     return (
         <View>
             <View style={{
@@ -21,20 +21,20 @@ function TitleAndInfosImmobile() {
                         color: '#000',
                         fontSize: 20,
                         marginBottom: 5
-                    }}>Casa - Ana Nery</Text>
+                    }}>{props.title}</Text>
                     <View style={{
                         flexDirection: "row"
                     }}>
                         <Text style={{
                             fontFamily: 'Montserrat-Regular',
                             color: '#737373'
-                        }}>Casa</Text>
+                        }}>{props.immobiletype}</Text>
                         <MaterialCommunityIcons name="circle-small" size={20} color='#737373' />
                         <MaterialCommunityIcons name="star" size={18} color='#EFBA00' />
                         <Text style={{
                             fontFamily: 'Montserrat-Bold',
                             color: '#000'
-                        }}>4.5</Text>
+                        }}>{props.ranking}</Text>
                     </View>
                 </View>
                 <View style={{
@@ -51,12 +51,12 @@ function TitleAndInfosImmobile() {
                         fontFamily: 'Montserrat-Bold',
                         fontSize: 20,
                         color: '#fff'
-                    }}>R$100.000</Text>
+                    }}>R${props.price}</Text>
                     <Text style={{
                         fontFamily: 'Montserrat-Bold',
                         fontSize: 16,
                         color: 'red'
-                    }}>Venda | Aluguel</Text>
+                    }}>{props.negotiationtype}</Text>
                 </View>
             </View>
             <View style={{
@@ -64,10 +64,10 @@ function TitleAndInfosImmobile() {
                 marginBottom: 32
             }}>
                 <InfosIconsImmobile
-                    bedQuantity={2}
-                    size={18}
-                    bethQuantity={1}
-                    garageQuantity={2}
+                    bedQuantity={props.bedrooms}
+                    size={props.size}
+                    bethQuantity={props.restrooms}
+                    garageQuantity={props.garages}
                     iconSize={26}
                     fontSize={16}
                 />

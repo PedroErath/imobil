@@ -5,7 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 function CardImmobile(props) {
     return (
-        <TouchableOpacity onPress={() => props.navigation.navigate('Imovel')} style={{
+        <TouchableOpacity onPress={() => props.navigation.navigate('Imovel', {...props})} style={{
             marginHorizontal: 16,
             flexDirection: "row",
             justifyContent: "space-between",
@@ -36,7 +36,7 @@ function CardImmobile(props) {
                         fontSize: 16,
                         marginBottom: 8
                     }}>
-                        {props.title}
+                        {props.immobile.title}
                     </Text>
                     <View style={{
                         flexDirection: "row",
@@ -50,7 +50,7 @@ function CardImmobile(props) {
                             fontFamily: 'Montserrat-Regular',
                             color: '#737373',
                         }}>
-                            {props.location}
+                            {`${props.immobile.address}, ${props.immobile.district} - ${props.immobile.city}`}
                         </Text>
                     </View>
                     <View style={{
@@ -62,21 +62,21 @@ function CardImmobile(props) {
                             fontFamily: 'Montserrat-Bold',
                             color: 'black'
                         }}>
-                            R${props.value}
+                            R${props.immobile.price}
                         </Text>
                         <Text style={{
                             fontFamily: 'Montserrat-Bold',
                             color: 'red'
                         }}>
-                            {props.type}
+                            {props.immobile.negotiationtype}
                         </Text>
                     </View>
 
                     <InfosIconsImmobile
-                        bedQuantity={props.bedQuantity}
-                        size={props.size}
-                        bethQuantity={props.bethQuantity}
-                        garageQuantity={props.garageQuantity}
+                        bedQuantity={props.immobile.bedrooms}
+                        size={props.immobile.size}
+                        bethQuantity={props.immobile.restrooms}
+                        garageQuantity={props.immobile.garages}
                         iconSize={20}
                         fontSize={14}
                     />

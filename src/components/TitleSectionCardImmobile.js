@@ -5,6 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 function TitleSectionCardImmobile(props){
     return(
         <View style={{
+            marginTop: 24,
             marginHorizontal: 23,
             flexDirection: "row",
             justifyContent: "space-between"

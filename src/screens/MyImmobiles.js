@@ -7,7 +7,7 @@ import SearchBar from "../components/SerchBar";
 import TitleSectionCardImmobile from "../components/TitleSectionCardImmobile";
 import CardImmobile from "../components/CardImmobile";
 
-function MyImmobiles() {
+function MyImmobiles(props) {
 
     const [myImmobiles, setMyImmobiles] = useState([])
     const [search, setSearch] = useState('')
@@ -17,8 +17,9 @@ function MyImmobiles() {
         firestore().collection('properties').where('realtor', '==', userLogged.uid).onSnapshot((querySnapshot) => {
             const ImmobilesArray = []
             querySnapshot.docs.map((doc) => {
+                
                 if (doc.data().title.indexOf(search) >= 0) {
-                    ImmobilesArray.push(doc.data())
+                    ImmobilesArray.push(doc)
                 }
             })
             setMyImmobiles(ImmobilesArray)
@@ -37,33 +38,27 @@ function MyImmobiles() {
         }}>
             <BannerHomeTop />
 
-            <SearchBar SetStateSearchComponent={SetStateSearchComponent} placeholder='Pesquise pelo nome' displayFilter='none' />
+            <SearchBar SetStateSearchComponent={SetStateSearchComponent} placeholder='Pesquise pelo título' displayFilter='none' />
 
-            <ScrollView style={{
-                marginTop: 24
+            <ScrollView contentContainerStyle={{
+                paddingBottom: 24
             }}>
                 <TitleSectionCardImmobile title='Santa Cruz do Sul' button='none' />
 
 
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{
                     flexDirection: 'row',
-                    height: 330,
-                    marginTop: 24
+                    flex: 1,
+                    marginTop: 16
                 }}>
                     {myImmobiles.map((immobile, index) => {
-                        if (immobile.city === 'Santa Cruz do Sul - RS') {
+                        if (immobile.data().city === 'Santa Cruz do Sul - RS') {
                             return (
                                 <CardImmobile
+                                    {...props}
+                                    immobile={immobile.data()}
+                                    id={immobile.id}
                                     key={index}
-                                    imageBanner={require('../images/house-banner-card.jpg')}
-                                    title={immobile.title}
-                                    location={`${immobile.address}, ${immobile.district} - ${immobile.city}`}
-                                    value={immobile.price}
-                                    type={immobile.negotiationtype}
-                                    bedQuantity={immobile.bedrooms}
-                                    size={immobile.size}
-                                    bethQuantity={immobile.restrooms}
-                                    garageQuantity={immobile.garages}
                                 />
                             )
                         }
@@ -74,23 +69,17 @@ function MyImmobiles() {
 
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{
                     flexDirection: 'row',
-                    height: 330,
-                    marginTop: 24
+                    flex: 1,
+                    marginTop: 16
                 }}>
                     {myImmobiles.map((immobile, index) => {
-                        if (immobile.city === 'Vera Cruz - RS') {
+                        if (immobile.data().city === 'Vera Cruz - RS') {
                             return (
                                 <CardImmobile
+                                    {...props}
+                                    immobile={immobile.data()}
+                                    id={immobile.id}
                                     key={index}
-                                    imageBanner={require('../images/house-banner-card.jpg')}
-                                    title={immobile.title}
-                                    location={`${immobile.address}, ${immobile.district} - ${immobile.city}`}
-                                    value={immobile.price}
-                                    type={immobile.negotiationtype}
-                                    bedQuantity={immobile.bedrooms}
-                                    size={immobile.size}
-                                    bethQuantity={immobile.restrooms}
-                                    garageQuantity={immobile.garages}
                                 />
                             )
                         }
@@ -101,23 +90,17 @@ function MyImmobiles() {
 
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{
                     flexDirection: 'row',
-                    height: 330,
-                    marginTop: 24
+                    flex: 1,
+                    marginTop: 16
                 }}>
                     {myImmobiles.map((immobile, index) => {
-                        if (immobile.city === 'Rio Pardo - RS') {
+                        if (immobile.data().city === 'Rio Pardo - RS') {
                             return (
                                 <CardImmobile
+                                    {...props}
+                                    immobile={immobile.data()}
+                                    id={immobile.id}
                                     key={index}
-                                    imageBanner={require('../images/house-banner-card.jpg')}
-                                    title={immobile.title}
-                                    location={`${immobile.address}, ${immobile.district} - ${immobile.city}`}
-                                    value={immobile.price}
-                                    type={immobile.negotiationtype}
-                                    bedQuantity={immobile.bedrooms}
-                                    size={immobile.size}
-                                    bethQuantity={immobile.restrooms}
-                                    garageQuantity={immobile.garages}
                                 />
                             )
                         }

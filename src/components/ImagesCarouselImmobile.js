@@ -6,8 +6,6 @@ function ImagesCarouselImmobile(props) {
 
     return (
         <View>
-
-
             <View style={{
                 height: 350
             }}>
@@ -17,12 +15,13 @@ function ImagesCarouselImmobile(props) {
                 }} />
             </View>
 
-            <TouchableOpacity onPress={() => props.navigation.goBack()} style={{
-                position: 'absolute',
-                marginLeft: 10,
-                marginTop: 10,
-                opacity: 0.8
-            }}>
+            <TouchableOpacity onPress={() => props.navigation.navigate(props.route.params.route.name == 'Meus Imoveis' ? 'Meus Imoveis' : 'Home')}
+                style={{
+                    position: 'absolute',
+                    marginLeft: 10,
+                    marginTop: 10,
+                    opacity: 0.8
+                }}>
                 <MaterialCommunityIcons name="arrow-left-circle" size={50} color='#737373' />
             </TouchableOpacity>
 

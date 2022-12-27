@@ -12,7 +12,7 @@ function ImmobileLocation() {
                 fontSize: 16,
                 color: 'black',
                 marginBottom: 16
-            }}>Localização</Text>
+            }}>Localização:</Text>
 
             <Image source={require('../images/map.jpg')} resizeMode='stretch' style={{
                 width: '100%',

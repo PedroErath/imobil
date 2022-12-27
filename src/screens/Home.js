@@ -1,12 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, ScrollView } from "react-native";
 import BannerHomeTop from "../components/BannerHomeTop";
 import SearchBar from "../components/SerchBar";
 import ButtonCategory from "../components/ButtonCategory";
+import firestore from '@react-native-firebase/firestore';
 import CardImmobile from "../components/CardImmobile";
 import TitleSectionCardImmobile from "../components/TitleSectionCardImmobile";
 
 function Home(props) {
+
+  const [immobiles, setImmobiles] = useState([])
+  const [search, setSearch] = useState('')
+
+  useEffect(() => {
+    firestore().collection('properties').onSnapshot((querySnapshot) => {
+      const ImmobilesArray = []
+      querySnapshot.docs.map((doc) => {
+        if (doc.data().title.indexOf(search) >= 0) {
+          ImmobilesArray.push(doc)
+        }
+      })
+      setImmobiles(ImmobilesArray)
+    }, (error) => {
+      console.log(error)
+    })
+  }, [search])
+
+  function SetStateSearchComponent(childData) {
+    setSearch(childData)
+  }
+
   return (
     <View>
       <ScrollView>
@@ -18,14 +41,17 @@ function Home(props) {
           backgroundColor: '#ddd'
         }}>
 
-          <SearchBar placeholder='O que você procura' />
+          <SearchBar placeholder='O que você procura' SetStateSearchComponent={SetStateSearchComponent} />
 
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{
-            height: 78,
-            flexDirection: "row",
-            marginTop: 24,
-            paddingLeft: 7
-          }}>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{
+              paddingBottom: 15
+            }}
+            style={{
+              flexDirection: "row",
+              marginTop: 24,
+              paddingLeft: 7
+            }}>
             <ButtonCategory icon='office-building' name='Apartamento' />
             <ButtonCategory icon='home' name='Casa' />
             <ButtonCategory icon='home-city' name='Sala Comercial' />
@@ -37,33 +63,21 @@ function Home(props) {
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{
             flexDirection: 'row',
             paddingLeft: 7,
-            height: 330,
+            flex: 1,
             marginTop: 24
           }}>
-            <CardImmobile
-              {...props}
-              imageBanner={require('../images/house-banner-card.jpg')}
-              title='Casa - Ana Nery'
-              location='Rua Curitiba, 590, Ana Nery - Santa Cruz do Sul - RS'
-              value='100.000'
-              type="Venda"
-              bedQuantity='2'
-              size='18'
-              bethQuantity='1'
-              garageQuantity='2'
-            />
-            <CardImmobile
-              {...props}
-              imageBanner={require('../images/house-banner-card.jpg')}
-              title='Casa - Ana Nery'
-              location='Rua Curitiba, 590, Ana Nery - Santa Cruz do Sul - RS'
-              value='100.000'
-              type="Venda"
-              bedQuantity='2'
-              size='18'
-              bethQuantity='1'
-              garageQuantity='2'
-            />
+            {immobiles.map((immobile, index) => {
+              if (Number(immobile.data().ranking) >= 4.5) {
+                return (
+                  <CardImmobile
+                    {...props}
+                    immobile={immobile.data()}
+                    id={immobile.id}
+                    key={index}
+                  />
+                )
+              }
+            })}
           </ScrollView>
 
           <TitleSectionCardImmobile title='Santa Cruz do Sul' />
@@ -71,33 +85,65 @@ function Home(props) {
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{
             flexDirection: 'row',
             paddingLeft: 7,
-            height: 350,
+            flex: 1,
             marginTop: 24
           }}>
-            <CardImmobile
-              {...props}
-              imageBanner={require('../images/house-banner-card.jpg')}
-              title='Casa - Ana Nery'
-              location='Rua Curitiba, 590, Ana Nery - Santa Cruz do Sul - RS'
-              value='100.000'
-              type="Venda"
-              bedQuantity='2'
-              size='18'
-              bethQuantity='1'
-              garageQuantity='2'
-            />
-            <CardImmobile
-              {...props}
-              imageBanner={require('../images/house-banner-card.jpg')}
-              title='Casa - Ana Nery'
-              location='Rua Curitiba, 590, Ana Nery - Santa Cruz do Sul - RS'
-              value='100.000'
-              type="Venda"
-              bedQuantity='2'
-              size='18'
-              bethQuantity='1'
-              garageQuantity='2'
-            />
+            {immobiles.map((immobile, index) => {
+              if (immobile.data().city == 'Santa Cruz do Sul - RS') {
+                return (
+                  <CardImmobile
+                    {...props}
+                    immobile={immobile.data()}
+                    id={immobile.id}
+                    key={index}
+                  />
+                )
+              }
+            })}
+          </ScrollView>
+
+          <TitleSectionCardImmobile title='Vera Cruz' />
+
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{
+            flexDirection: 'row',
+            paddingLeft: 7,
+            flex: 1,
+            marginTop: 24
+          }}>
+            {immobiles.map((immobile, index) => {
+              if (immobile.data().city == 'Vera Cruz - RS') {
+                return (
+                  <CardImmobile
+                    {...props}
+                    immobile={immobile.data()}
+                    id={immobile.id}
+                    key={index}
+                  />
+                )
+              }
+            })}
+          </ScrollView>
+
+          <TitleSectionCardImmobile title='Rio Pardo' />
+
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{
+            flexDirection: 'row',
+            paddingLeft: 7,
+            flex: 1,
+            marginTop: 24
+          }}>
+            {immobiles.map((immobile, index) => {
+              if (immobile.data().city == 'Rio Pardo - RS') {
+                return (
+                  <CardImmobile
+                    {...props}
+                    immobile={immobile.data()}
+                    id={immobile.id}
+                    key={index}
+                  />
+                )
+              }
+            })}
           </ScrollView>
 
         </View>

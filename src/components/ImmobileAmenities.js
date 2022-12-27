@@ -2,10 +2,11 @@ import React from "react";
 import { View, Text } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-function ImmobileAmenities(){
-    return(
+function ImmobileAmenities(props) {
+
+    return (
         <View style={{
-            paddingHorizontal:23,
+            paddingHorizontal: 23,
             marginBottom: 23
         }}>
             <Text style={{
@@ -20,67 +21,18 @@ function ImmobileAmenities(){
                 flexWrap: "wrap",
                 justifyContent: 'space-between'
             }}>
-                <Text style={{
-                    fontFamily: 'Montserrat-Regular',
-                    color: 'black',
-                    width: '45%',
-                    marginBottom: 8,
-                }}><MaterialCommunityIcons name="circle" color={'#197B5C'} /> Ar condicionado</Text>
-                <Text style={{
-                    fontFamily: 'Montserrat-Regular',
-                    color: 'black',
-                    width: '45%',
-                    marginBottom: 8,
-                }}><MaterialCommunityIcons name="circle" color={'#197B5C'} /> Churrasqueira</Text>
-                <Text style={{
-                    fontFamily: 'Montserrat-Regular',
-                    color: 'black',
-                    width: '45%',
-                    marginBottom: 8,
-                }}><MaterialCommunityIcons name="circle" color={'#197B5C'} /> Área de serviço</Text>
-                <Text style={{
-                    fontFamily: 'Montserrat-Regular',
-                    color: 'black',
-                    width: '45%',
-                    marginBottom: 8,
-                }}><MaterialCommunityIcons name="circle" color={'#197B5C'} /> Banheiro Social</Text>
-                <Text style={{
-                    fontFamily: 'Montserrat-Regular',
-                    color: 'black',
-                    width: '45%',
-                    marginBottom: 8,
-                }}><MaterialCommunityIcons name="circle" color={'#197B5C'} /> Cozinha Americana</Text>
-                <Text style={{
-                    fontFamily: 'Montserrat-Regular',
-                    color: 'black',
-                    width: '45%',
-                    marginBottom: 8,
-                }}><MaterialCommunityIcons name="circle" color={'#197B5C'} /> Sacada</Text>
-                <Text style={{
-                    fontFamily: 'Montserrat-Regular',
-                    color: 'black',
-                    width: '45%',
-                    marginBottom: 8,
-                }}><MaterialCommunityIcons name="circle" color={'#197B5C'} /> Sala de jantar</Text>
-                <Text style={{
-                    fontFamily: 'Montserrat-Regular',
-                    color: 'black',
-                    width: '45%',
-                    marginBottom: 8,
-                }}><MaterialCommunityIcons name="circle" color={'#197B5C'} /> Escritório</Text>
-                <Text style={{
-                    fontFamily: 'Montserrat-Regular',
-                    color: 'black',
-                    width: '45%',
-                    marginBottom: 8,
-                }}><MaterialCommunityIcons name="circle" color={'#197B5C'} /> Piscina</Text>
-                <Text style={{
-                    fontFamily: 'Montserrat-Regular',
-                    color: 'black',
-                    width: '45%',
-                    marginBottom: 8,
-                }}><MaterialCommunityIcons name="circle" color={'#197B5C'} /> Despósito</Text>
-                
+                {props.amenities.map((amenitie, index) => {
+                    return (
+                        <Text key={index}
+                            style={{
+                                fontFamily: 'Montserrat-Regular',
+                                color: 'black',
+                                width: '45%',
+                                marginBottom: 8
+                            }}><MaterialCommunityIcons name="circle" color={'#197B5C'} /> {amenitie}</Text>
+                    )
+                })}
+
             </View>
         </View>
     )

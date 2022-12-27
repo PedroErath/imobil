@@ -18,13 +18,13 @@ function Immobile(props) {
 
                     <ImagesCarouselImmobile {...props}/>
 
-                    <TitleAndInfosImmobile />
+                    <TitleAndInfosImmobile {...props.route.params.immobile}/>
 
-                    <ImmobileAmenities />
+                    <ImmobileAmenities {...props.route.params.immobile} />
 
-                    <ImmobileLocation />
+                    <ImmobileLocation {...props.route.params.immobile}/>
 
-                    <ImmobileRealtor />
+                    <ImmobileRealtor {...props.route.params.immobile}/>
 
                 </View>
             </ScrollView>

@@ -18,10 +18,10 @@ function RealtorProfile(props) {
         GetImageFromProfile()
         userLogged ? setInputUserName({ editable: false, name: userLogged.displayName }) : null
         profileImage.fileName ? UploadImageToStorage() : null
-    }, [profileImage])
+    }, [profileImage, userLogged])
 
     async function GetImageFromProfile() {
-        if (userLogged) {
+        if (userLogged.photoURL) {
             const url = await storage().ref(userLogged.photoURL).getDownloadURL()
             setProfileImage({ uri: url })
         }
@@ -86,16 +86,23 @@ function RealtorProfile(props) {
         const reference = storage().ref(`realtors/${userLogged.uid}.${ext}`)
 
         reference.putFile(profileImage.uri).then(result => {
-            userLogged.updateProfile({
-                photoURL: reference.fullPath
+            firestore().collection('users').doc(userLogged.uid).update({
+                photoURL: reference.fullPath,
+            }).then(() => {
+                userLogged.updateProfile({
+                    photoURL: reference.fullPath
+                })
+                setResponseMessage({
+                    success: true,
+                    msg: 'Foto de perfil atualizada'
+                })
+                setTimeout(() => {
+                    setResponseMessage({})
+                }, 3000)
             })
-            setResponseMessage({
-                success: true,
-                msg: 'Foto de perfil atualizada'
+            .catch((error) => {
+                console.log(error)
             })
-            setTimeout(() => {
-                setResponseMessage({})
-            }, 3000)
         })
             .catch(error => {
                 console.log(error)
@@ -106,11 +113,11 @@ function RealtorProfile(props) {
         setInputUserName({ ...inputUserName, editable: !inputUserName.editable })
     }
 
-    function EditarDisplauNameCurrentUser() {
+    function EditDisplayNameCurrentUser() {
         userLogged.updateProfile({
             displayName: inputUserName.name
         }).then(() => {
-            firestore().collection('users').doc(userLogged.uid).set({
+            firestore().collection('users').doc(userLogged.uid).update({
                 name: inputUserName.name,
             })
                 .then(() => {
@@ -181,7 +188,7 @@ function RealtorProfile(props) {
                 }}>{userLogged ? userLogged.email : ''}</Text>
 
                 <TouchableOpacity
-                    onPress={() => EditarDisplauNameCurrentUser()}
+                    onPress={() => EditDisplayNameCurrentUser()}
                     style={{
                         display: userLogged && userLogged.displayName == inputUserName.name ? 'none' : null,
                         marginTop: 16,
