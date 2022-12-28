@@ -45,12 +45,12 @@ function Home(props) {
 
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}
             contentContainerStyle={{
-              paddingBottom: 15
+              paddingBottom: 15,
+              paddingHorizontal: 15
             }}
             style={{
               flexDirection: "row",
-              marginTop: 24,
-              paddingLeft: 7
+              marginTop: 24
             }}>
             <ButtonCategory icon='office-building' name='Apartamento' />
             <ButtonCategory icon='home' name='Casa' />
@@ -60,12 +60,17 @@ function Home(props) {
 
           <TitleSectionCardImmobile title='Destaques' />
 
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{
-            flexDirection: 'row',
-            paddingLeft: 7,
-            flex: 1,
-            marginTop: 24
-          }}>
+          <ScrollView horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{
+              paddingLeft: 7,
+              marginTop: 24,
+              marginBottom: 10
+            }}
+            style={{
+              flexDirection: 'row',
+              flex: 1,
+            }}>
             {immobiles.map((immobile, index) => {
               if (Number(immobile.data().ranking) >= 4.5) {
                 return (
@@ -82,12 +87,17 @@ function Home(props) {
 
           <TitleSectionCardImmobile title='Santa Cruz do Sul' />
 
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{
-            flexDirection: 'row',
-            paddingLeft: 7,
-            flex: 1,
-            marginTop: 24
-          }}>
+          <ScrollView horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{
+              paddingLeft: 7,
+              marginTop: 24,
+              marginBottom: 10
+            }}
+            style={{
+              flexDirection: 'row',
+              flex: 1,
+            }}>
             {immobiles.map((immobile, index) => {
               if (immobile.data().city == 'Santa Cruz do Sul - RS') {
                 return (
@@ -104,12 +114,17 @@ function Home(props) {
 
           <TitleSectionCardImmobile title='Vera Cruz' />
 
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{
-            flexDirection: 'row',
-            paddingLeft: 7,
-            flex: 1,
-            marginTop: 24
-          }}>
+          <ScrollView horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{
+              paddingLeft: 7,
+              marginTop: 24,
+              marginBottom: 10
+            }}
+            style={{
+              flexDirection: 'row',
+              flex: 1,
+            }}>
             {immobiles.map((immobile, index) => {
               if (immobile.data().city == 'Vera Cruz - RS') {
                 return (
@@ -126,12 +141,17 @@ function Home(props) {
 
           <TitleSectionCardImmobile title='Rio Pardo' />
 
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{
-            flexDirection: 'row',
-            paddingLeft: 7,
-            flex: 1,
-            marginTop: 24
-          }}>
+          <ScrollView horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{
+              paddingLeft: 7,
+              marginTop: 24,
+              marginBottom: 24
+            }}
+            style={{
+              flexDirection: 'row',
+              flex: 1,
+            }}>
             {immobiles.map((immobile, index) => {
               if (immobile.data().city == 'Rio Pardo - RS') {
                 return (

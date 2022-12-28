@@ -11,7 +11,7 @@ function ButtonCategory(props) {
             borderRadius: 50,
             padding: 12,
             elevation: 15,
-            marginLeft: 16,
+            marginLeft: 8,
             shadowColor: 'black'
         }}>
             <MaterialCommunityIcons name={props.icon} size={20} color='#197B5C' />

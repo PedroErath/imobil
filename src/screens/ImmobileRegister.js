@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, Text, ImageBackground, TouchableOpacity, TextInput, Keyboard } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
+import ImageCropPicker from "react-native-image-crop-picker";
 import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 import auth from '@react-native-firebase/auth';
 
 function ImmobileRegister(props) {
 
     const [immobile, setImmobile] = useState({})
+    const [immobileImages, setImmobileImages] = useState([])
     const userLogged = auth().currentUser
     const [responseMessage, setResponseMessage] = useState({})
 
@@ -50,7 +53,7 @@ function ImmobileRegister(props) {
         { label: 'Rio Pardo - RS', value: 'Rio Pardo - RS' }
     ])
 
-    function onImmobileAndNegociationTypeOpen () {
+    function onImmobileAndNegociationTypeOpen() {
         Keyboard.dismiss()
         setCityOpen(false)
     }
@@ -68,7 +71,8 @@ function ImmobileRegister(props) {
             city &&
             amenities &&
             negotiationType &&
-            immobileType
+            immobileType &&
+            immobileImages.length > 0
         ) {
             firestore()
                 .collection('properties')
@@ -88,7 +92,12 @@ function ImmobileRegister(props) {
                     amenities: amenities,
                     realtor: userLogged.uid
                 })
-                .then(() => {
+                .then((doc) => {
+                    for(let i = 0; i < immobileImages.length ; i++){
+                        let path = `immobiles/${doc.id}/${doc.id}-${i}.jpg`
+                        uploadImageToStorage(path, i)
+                    }
+                    console.log(doc.id)
                     props.navigation.navigate('Meus Imoveis')
                     setCity([])
                     setAmenities([])
@@ -102,6 +111,33 @@ function ImmobileRegister(props) {
                 msg: 'Preencha todos os campos'
             })
         }
+    }
+
+    function handleSelectImages() {
+        ImageCropPicker.openPicker({
+            multiple: true,
+            mediaType: 'photo',
+            showCropGuidelines: true,
+        })
+            .then((images) => {
+                console.log(images[0].mime.split('/').pop())
+                setImmobileImages(images)
+            })
+            .catch(erro => {
+                console.log(erro)
+            })
+    }
+
+    function uploadImageToStorage(path, i) {
+        const reference = storage().ref(path)
+
+        reference.putFile(immobileImages[i].path)
+            .then(() => {
+                console.log('ok')
+            })
+            .catch(erro => {
+                console.log(erro)
+            })
     }
 
     return (
@@ -127,6 +163,7 @@ function ImmobileRegister(props) {
                     }}>Registrar Imóvel</Text>
 
                     <TextInput onChangeText={e => setImmobile({ ...immobile, title: e })}
+                        defaultValue={immobile.title}
                         placeholder="Titulo"
                         placeholderTextColor='#000'
                         style={{
@@ -142,6 +179,7 @@ function ImmobileRegister(props) {
                         justifyContent: 'space-between'
                     }}>
                         <TextInput onChangeText={e => setImmobile({ ...immobile, address: e })}
+                        defaultValue={immobile.address}
                             placeholder="Rua, Número"
                             placeholderTextColor='#000'
                             style={{
@@ -154,6 +192,7 @@ function ImmobileRegister(props) {
                             }}
                         />
                         <TextInput onChangeText={e => setImmobile({ ...immobile, district: e })}
+                        defaultValue={immobile.district}
                             placeholder="Bairro"
                             placeholderTextColor='#000'
                             style={{
@@ -190,6 +229,7 @@ function ImmobileRegister(props) {
                         justifyContent: 'space-between'
                     }}>
                         <TextInput onChangeText={e => setImmobile({ ...immobile, price: e })}
+                        defaultValue={immobile.price}
                             placeholder="Preço (R$)"
                             keyboardType="number-pad"
                             placeholderTextColor='#000'
@@ -203,6 +243,7 @@ function ImmobileRegister(props) {
                             }}
                         />
                         <TextInput onChangeText={e => setImmobile({ ...immobile, ranking: e })}
+                        defaultValue={immobile.ranking}
                             placeholder="Nota"
                             keyboardType="number-pad"
                             placeholderTextColor='#000'
@@ -269,6 +310,7 @@ function ImmobileRegister(props) {
                         justifyContent: 'space-between'
                     }}>
                         <TextInput onChangeText={e => setImmobile({ ...immobile, bedrooms: e })}
+                        defaultValue={immobile.bedrooms}
                             placeholder="Quartos"
                             keyboardType="number-pad"
                             placeholderTextColor='#000'
@@ -280,6 +322,7 @@ function ImmobileRegister(props) {
                             }}
                         />
                         <TextInput onChangeText={e => setImmobile({ ...immobile, restrooms: e })}
+                        defaultValue={immobile.restrooms}
                             placeholder="Banheiros"
                             keyboardType="number-pad"
                             placeholderTextColor='#000'
@@ -291,6 +334,7 @@ function ImmobileRegister(props) {
                             }}
                         />
                         <TextInput onChangeText={e => setImmobile({ ...immobile, garages: e })}
+                        defaultValue={immobile.garages}
                             placeholder="Garagens"
                             keyboardType="number-pad"
                             placeholderTextColor='#000'
@@ -302,6 +346,7 @@ function ImmobileRegister(props) {
                             }}
                         />
                         <TextInput onChangeText={e => setImmobile({ ...immobile, size: e })}
+                        defaultValue={immobile.size}
                             placeholder="Tamanho"
                             keyboardType="number-pad"
                             placeholderTextColor='#000'
@@ -335,16 +380,20 @@ function ImmobileRegister(props) {
                         mode="BADGE"
                         badgeDotColors='#197B5C'
                     />
-                    <TextInput placeholder="Fotos"
-                        placeholderTextColor='#000'
+                    <TouchableOpacity onPress={() => handleSelectImages()}
                         style={{
                             backgroundColor: '#fff',
                             width: '100%',
                             borderRadius: 10,
                             paddingHorizontal: 15,
-                            marginBottom: 8
+                            paddingVertical: 15
                         }}
-                    />
+                    >
+                        <Text style={{
+                            color: 'white'
+                        }}>{`${immobileImages.length} fotos selecionadas`}</Text>
+                    </TouchableOpacity>
+                    <Text style={{ marginBottom: 8 }}>*A primeira imagem selecionada será a capa.</Text>
                     <Text style={{
                         color: responseMessage.success ? '#197B5C' : 'red',
                         textAlign: 'center',

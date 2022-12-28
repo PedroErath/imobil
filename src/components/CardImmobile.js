@@ -1,11 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import InfosIconsImmobile from "./InfosIconsImmobile";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import storage from '@react-native-firebase/storage'
 
 function CardImmobile(props) {
+
+    const [imageBanner, setImageBanner] = useState()
+
+    useEffect(() => {
+        GetImageBanner()
+            .then(() => {
+                console.log('ok')
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    },[])
+
+    async function GetImageBanner() {
+        const url = await storage().ref(`immobiles/${props.id}/${props.id}-0.jpg`).getDownloadURL()
+        setImageBanner(url)
+    }
+
     return (
-        <TouchableOpacity onPress={() => props.navigation.navigate('Imovel', {...props})} style={{
+        <TouchableOpacity onPress={() => props.navigation.navigate('Imovel', { ...props })} style={{
             marginHorizontal: 16,
             flexDirection: "row",
             justifyContent: "space-between",
@@ -17,7 +36,7 @@ function CardImmobile(props) {
             borderColor: '#000'
         }}>
             <View>
-                <Image source={require('../images/house-primary.jpg')} resizeMode='stretch' style={{
+                <Image source={{uri:imageBanner}} resizeMode='stretch' style={{
                     width: 267,
                     height: 160,
                     borderTopLeftRadius: 5,
