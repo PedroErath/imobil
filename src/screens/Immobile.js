@@ -21,7 +21,7 @@ function Immobile(props) {
                     backgroundColor: '#ddd'
                 }}>
 
-                    <ImagesCarouselImmobile {...props} />
+                    <ImagesCarouselImmobile {...props} id={props.route.params.id} />
 
                     <TitleAndInfosImmobile {...props.route.params.immobile} />
 

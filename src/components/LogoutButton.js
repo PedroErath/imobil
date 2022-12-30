@@ -10,6 +10,9 @@ function LogoutButton (props){
             .then(() => {
                 props.navigation.navigate('Corretor')
             })
+            .catch(erro => {
+                console.log(`Erro signOut:${erro}`)
+            })
     }
 
     return(

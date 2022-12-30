@@ -1,15 +1,41 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import storage from '@react-native-firebase/storage';
 import { View, ScrollView, Image, TouchableOpacity } from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 function ImagesCarouselImmobile(props) {
+
+    const [selectedImage, setSelectedImage] = useState()
+    const [allImages, setAllImages] = useState([])
+
+    useEffect(() => {
+        getImagesFromStorage()
+    }, [])
+
+    function getImagesFromStorage() {
+        const directoryRereference = storage().ref(`immobiles/${props.id}/`)
+
+        directoryRereference.listAll()
+            .then(async (list) => {
+                const arrayImages = []
+                for (let i = 0; i < list.items.length; i++) {
+                    let url = await storage().ref(list.items[i].fullPath).getDownloadURL()
+                    arrayImages.push(url)
+                }
+                setAllImages(arrayImages)
+                setSelectedImage(arrayImages[0])
+            })
+            .catch(erro => {
+                console.log(`Erro ListAll storage:${erro}`)
+            })
+    }
 
     return (
         <View>
             <View style={{
                 height: 350
             }}>
-                <Image source={require('../images/house-primary.jpg')} resizeMode='stretch' style={{
+                <Image source={{ uri: selectedImage }} resizeMode='stretch' style={{
                     height: '100%',
                     width: '100%'
                 }} />
@@ -33,54 +59,19 @@ function ImagesCarouselImmobile(props) {
                     paddingHorizontal: 18,
                     justifyContent: 'space-between'
                 }}>
-                    <TouchableOpacity>
-                        <Image source={require('../images/house-primary.jpg')} resizeMode='stretch' style={{
-                            width: 100,
-                            height: 55,
-                            borderRadius: 10,
-                            marginHorizontal: 5
-                        }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Image source={require('../images/small-house.jpg')} resizeMode='stretch' style={{
-                            width: 100,
-                            height: 55,
-                            borderRadius: 10,
-                            marginHorizontal: 5
-                        }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Image source={require('../images/small-house.jpg')} resizeMode='stretch' style={{
-                            width: 100,
-                            height: 55,
-                            borderRadius: 10,
-                            marginHorizontal: 5
-                        }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Image source={require('../images/small-house.jpg')} resizeMode='stretch' style={{
-                            width: 100,
-                            height: 55,
-                            borderRadius: 10,
-                            marginHorizontal: 5
-                        }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Image source={require('../images/small-house.jpg')} resizeMode='stretch' style={{
-                            width: 100,
-                            height: 55,
-                            borderRadius: 10,
-                            marginHorizontal: 5
-                        }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Image source={require('../images/small-house.jpg')} resizeMode='stretch' style={{
-                            width: 100,
-                            height: 55,
-                            borderRadius: 10,
-                            marginHorizontal: 5
-                        }} />
-                    </TouchableOpacity>
+                    {allImages.map((image, index) => {
+                        return (
+                            <TouchableOpacity onPress={() => setSelectedImage(image)}
+                                key={index}>
+                                <Image source={{ uri: image }} resizeMode='stretch' style={{
+                                    width: 100,
+                                    height: 55,
+                                    borderRadius: 10,
+                                    marginHorizontal: 5
+                                }} />
+                            </TouchableOpacity>
+                        )
+                    })}
                 </ScrollView>
             </View>
         </View>

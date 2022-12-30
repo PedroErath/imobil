@@ -105,6 +105,9 @@ function ImmobileRegister(props) {
                     setNegotiationType([])
                     setImmobileType([])
                 })
+                .catch(erro => {
+                    console.log(`immobile Register:${erro}`)
+                })
         } else {
             setResponseMessage({
                 success: false,
@@ -124,7 +127,7 @@ function ImmobileRegister(props) {
                 setImmobileImages(images)
             })
             .catch(erro => {
-                console.log(erro)
+                console.log(`Erro ImageCrop:${erro}`)
             })
     }
 

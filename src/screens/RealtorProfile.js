@@ -85,27 +85,31 @@ function RealtorProfile(props) {
         const ext = profileImage.fileName.split('.').pop()
         const reference = storage().ref(`realtors/${userLogged.uid}.${ext}`)
 
-        reference.putFile(profileImage.uri).then(result => {
-            firestore().collection('users').doc(userLogged.uid).update({
-                photoURL: reference.fullPath,
-            }).then(() => {
-                userLogged.updateProfile({
-                    photoURL: reference.fullPath
+        reference.putFile(profileImage.uri)
+            .then(result => {
+                firestore().collection('users').doc(userLogged.uid).update({
+                    photoURL: reference.fullPath,
+                }).then(() => {
+                    userLogged.updateProfile({
+                        photoURL: reference.fullPath
+                    })
+                        .catch(erro => {
+                            console.log(erro)
+                        })
+                    setResponseMessage({
+                        success: true,
+                        msg: 'Foto de perfil atualizada'
+                    })
+                    setTimeout(() => {
+                        setResponseMessage({})
+                    }, 3000)
                 })
-                setResponseMessage({
-                    success: true,
-                    msg: 'Foto de perfil atualizada'
-                })
-                setTimeout(() => {
-                    setResponseMessage({})
-                }, 3000)
+                    .catch((error) => {
+                        console.log(`Erro Update PhotoURL firestore:${error}`)
+                    })
             })
-            .catch((error) => {
-                console.log(error)
-            })
-        })
             .catch(error => {
-                console.log(error)
+                console.log(`Erro Update PhotoURL authentication:${error}`)
             })
     }
 
@@ -130,9 +134,12 @@ function RealtorProfile(props) {
                         setResponseMessage({})
                     }, 3000)
                 })
+                .catch((erro) => {
+                    console.log(`Erro Update name firestore:${erro}`)
+                })
         })
             .catch(erro => {
-                console.log(erro)
+                console.log(`Erro Update displayName authentication:${erro}`)
             })
     }
 
