@@ -15,7 +15,7 @@ function TitleSectionCardImmobile(props){
               color: 'black',
               fontSize: 20
             }}>{props.title}</Text>
-            <TouchableOpacity style={{
+            {/* <TouchableOpacity style={{
               flexDirection: "row",
               alignItems: "center",
               display: props.button
@@ -26,7 +26,7 @@ function TitleSectionCardImmobile(props){
                 fontSize: 16
               }}>Ver todos </Text>
               <MaterialCommunityIcons name="chevron-right" size={24} color='#197B5C' />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
     )
 }

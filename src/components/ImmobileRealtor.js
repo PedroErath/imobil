@@ -9,7 +9,7 @@ function ImmobileRealtor(props) {
     const [imageRealtor, setImageRealtor] = useState('')
 
     useEffect(() => {
-        GetRealtorPerfilAndImage()
+        props.realtor ? GetRealtorPerfilAndImage() : null
         firestore().collection('users').doc(props.realtor).get()
     }, [])
 

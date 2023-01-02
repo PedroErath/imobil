@@ -10,12 +10,6 @@ function CardImmobile(props) {
 
     useEffect(() => {
         GetImageBanner()
-            .then(() => {
-                console.log('ok')
-            })
-            .catch(error => {
-                console.log(error)
-            })
     },[])
 
     async function GetImageBanner() {

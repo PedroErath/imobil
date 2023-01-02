@@ -11,23 +11,42 @@ function Home(props) {
 
   const [immobiles, setImmobiles] = useState([])
   const [search, setSearch] = useState('')
+  const [typeImmobileFilter, setTypeImmobileFilter] = useState('')
+
 
   useEffect(() => {
-    firestore().collection('properties').onSnapshot((querySnapshot) => {
-      const ImmobilesArray = []
-      querySnapshot.docs.map((doc) => {
-        if (doc.data().title.indexOf(search) >= 0) {
-          ImmobilesArray.push(doc)
-        }
+    if (!typeImmobileFilter) {
+      firestore().collection('properties').onSnapshot((querySnapshot) => {
+        const ImmobilesArray = []
+        querySnapshot.docs.map((doc) => {
+          if (doc.data().title.indexOf(search) >= 0 || doc.data().address.indexOf(search) >= 0 || doc.data().district.indexOf(search) >= 0) {
+            ImmobilesArray.push(doc)
+          }
+        })
+        setImmobiles(ImmobilesArray)
+      }, (error) => {
+        console.log(error)
       })
-      setImmobiles(ImmobilesArray)
-    }, (error) => {
-      console.log(error)
-    })
-  }, [search])
+    } else {
+      firestore().collection('properties').where('immobiletype', '==', typeImmobileFilter).onSnapshot((querySnapshot) => {
+        const ImmobilesArray = []
+        querySnapshot.docs.map((doc) => {
+          if (doc.data().title.indexOf(search) >= 0 || doc.data().address.indexOf(search) >= 0 || doc.data().district.indexOf(search) >= 0) {
+            ImmobilesArray.push(doc)
+          }
+        })
+        setImmobiles(ImmobilesArray)
+      }, (error) => {
+        console.log(error)
+      })
+    }
+  }, [search, typeImmobileFilter])
 
   function SetStateSearchComponent(childData) {
     setSearch(childData)
+  }
+  function SetStateTypeImmobileFilter(childData) {
+    childData == typeImmobileFilter ? setTypeImmobileFilter() : setTypeImmobileFilter(childData)
   }
 
   return (
@@ -41,7 +60,7 @@ function Home(props) {
           backgroundColor: '#ddd'
         }}>
 
-          <SearchBar placeholder='O que você procura' SetStateSearchComponent={SetStateSearchComponent} />
+          <SearchBar placeholder='O que você procura' displayFilter='none' SetStateSearchComponent={SetStateSearchComponent} />
 
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}
             contentContainerStyle={{
@@ -52,10 +71,10 @@ function Home(props) {
               flexDirection: "row",
               marginTop: 24
             }}>
-            <ButtonCategory icon='office-building' name='Apartamento' />
-            <ButtonCategory icon='home' name='Casa' />
-            <ButtonCategory icon='home-city' name='Sala Comercial' />
-            <ButtonCategory icon='home-modern' name='Duplex' />
+            <ButtonCategory icon='office-building' name='Apartamento' SetStateTypeImmobileFilter={SetStateTypeImmobileFilter} bgColor={typeImmobileFilter == 'Apartamento' ? '#ccc' : 'white'} />
+            <ButtonCategory icon='home' name='Casa' SetStateTypeImmobileFilter={SetStateTypeImmobileFilter} bgColor={typeImmobileFilter == 'Casa' ? '#ccc' : 'white'} />
+            <ButtonCategory icon='home-city' name='Sala Comercial' SetStateTypeImmobileFilter={SetStateTypeImmobileFilter} bgColor={typeImmobileFilter == 'Sala Comercial' ? '#ccc' : 'white'} />
+            <ButtonCategory icon='home-modern' name='Duplex' SetStateTypeImmobileFilter={SetStateTypeImmobileFilter} bgColor={typeImmobileFilter == 'Duplex' ? '#ccc' : 'white'} />
           </ScrollView>
 
           <TitleSectionCardImmobile title='Destaques' />

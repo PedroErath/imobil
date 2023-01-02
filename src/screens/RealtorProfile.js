@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, Text, TextInput, Image, ImageBackground, Alert } from 'react-native';
+import { View, TouchableOpacity, Text, TextInput, Image, ImageBackground, Alert, LogBox} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
@@ -8,6 +8,10 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import LogoutButton from '../components/LogoutButton';
 
 function RealtorProfile(props) {
+
+    LogBox.ignoreLogs([
+        'Possible Unhandled Promise Rejection',
+    ]);
 
     const [profileImage, setProfileImage] = useState({})
     const [responseMessage, setResponseMessage] = useState({})
@@ -92,24 +96,25 @@ function RealtorProfile(props) {
                 }).then(() => {
                     userLogged.updateProfile({
                         photoURL: reference.fullPath
-                    })
-                        .catch(erro => {
-                            console.log(erro)
+                    }).then(() => {
+                        setResponseMessage({
+                            success: true,
+                            msg: 'Foto de perfil atualizada'
                         })
-                    setResponseMessage({
-                        success: true,
-                        msg: 'Foto de perfil atualizada'
+                        setTimeout(() => {
+                            setResponseMessage({})
+                        }, 3000)
                     })
-                    setTimeout(() => {
-                        setResponseMessage({})
-                    }, 3000)
+                    .catch((erro) => {
+                        console.log(`Erro Update PhotoURL autherntication:${erro}`)
+                    })
                 })
                     .catch((error) => {
                         console.log(`Erro Update PhotoURL firestore:${error}`)
                     })
             })
             .catch(error => {
-                console.log(`Erro Update PhotoURL authentication:${error}`)
+                console.log(`Erro Update PhotoURL storage:${error}`)
             })
     }
 
