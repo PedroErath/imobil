@@ -48,7 +48,7 @@ function ImagesCarouselImmobile(props) {
                     marginTop: 10,
                     opacity: 0.8
                 }}>
-                <MaterialCommunityIcons name="arrow-left-circle" size={50} color='#737373' />
+                <MaterialCommunityIcons name="arrow-left-circle" size={50} color='#222' />
             </TouchableOpacity>
 
             <View style={{

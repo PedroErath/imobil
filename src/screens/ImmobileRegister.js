@@ -68,6 +68,8 @@ function ImmobileRegister(props) {
             immobile.restrooms &&
             immobile.garages &&
             immobile.size &&
+            immobile.latitude &&
+            immobile.longitude &&
             city &&
             amenities &&
             negotiationType &&
@@ -89,6 +91,7 @@ function ImmobileRegister(props) {
                     restrooms: immobile.restrooms,
                     garages: immobile.garages,
                     size: immobile.size,
+                    maplocation: {latitude: immobile.latitude, longitude: immobile.longitude},
                     amenities: amenities,
                     realtor: userLogged.uid
                 })
@@ -97,7 +100,6 @@ function ImmobileRegister(props) {
                         let path = `immobiles/${doc.id}/${doc.id}-${i}.jpg`
                         uploadImageToStorage(path, i)
                     }
-                    console.log(doc.id)
                     props.navigation.navigate('Meus Imoveis')
                     setCity([])
                     setAmenities([])
@@ -123,7 +125,6 @@ function ImmobileRegister(props) {
             showCropGuidelines: true,
         })
             .then((images) => {
-                console.log(images[0].mime.split('/').pop())
                 setImmobileImages(images)
             })
             .catch(erro => {
@@ -136,7 +137,7 @@ function ImmobileRegister(props) {
 
         reference.putFile(immobileImages[i].path)
             .then(() => {
-                console.log('ok')
+                console.log('PutFile storage success')
             })
             .catch(erro => {
                 console.log(erro)
@@ -159,10 +160,11 @@ function ImmobileRegister(props) {
                     paddingHorizontal: 23
                 }}>
                     <Text style={{
-                        fontSize: 50,
+                        fontSize: 40,
                         color: '#197B5C',
                         fontFamily: "Montserrat-Bold",
-                        textAlign: "center"
+                        textAlign: "center",
+                        marginBottom: 8
                     }}>Registrar Imóvel</Text>
 
                     <TextInput onChangeText={e => setImmobile({ ...immobile, title: e })}
@@ -231,7 +233,7 @@ function ImmobileRegister(props) {
                         flexDirection: "row",
                         justifyContent: 'space-between'
                     }}>
-                        <TextInput onChangeText={e => setImmobile({ ...immobile, price: e })}
+                        <TextInput onChangeText={e => setImmobile({ ...immobile, price: Number(e)})}
                         defaultValue={immobile.price}
                             placeholder="Preço (R$)"
                             keyboardType="number-pad"
@@ -245,7 +247,7 @@ function ImmobileRegister(props) {
                                 marginRight: 5
                             }}
                         />
-                        <TextInput onChangeText={e => setImmobile({ ...immobile, ranking: e })}
+                        <TextInput onChangeText={e => setImmobile({ ...immobile, ranking: Number(e) })}
                         defaultValue={immobile.ranking}
                             placeholder="Nota"
                             keyboardType="number-pad"
@@ -312,7 +314,7 @@ function ImmobileRegister(props) {
                         flexDirection: "row",
                         justifyContent: 'space-between'
                     }}>
-                        <TextInput onChangeText={e => setImmobile({ ...immobile, bedrooms: e })}
+                        <TextInput onChangeText={e => setImmobile({ ...immobile, bedrooms: Number(e) })}
                         defaultValue={immobile.bedrooms}
                             placeholder="Quartos"
                             keyboardType="number-pad"
@@ -324,7 +326,7 @@ function ImmobileRegister(props) {
                                 marginBottom: 8
                             }}
                         />
-                        <TextInput onChangeText={e => setImmobile({ ...immobile, restrooms: e })}
+                        <TextInput onChangeText={e => setImmobile({ ...immobile, restrooms: Number(e) })}
                         defaultValue={immobile.restrooms}
                             placeholder="Banheiros"
                             keyboardType="number-pad"
@@ -336,7 +338,7 @@ function ImmobileRegister(props) {
                                 marginBottom: 8
                             }}
                         />
-                        <TextInput onChangeText={e => setImmobile({ ...immobile, garages: e })}
+                        <TextInput onChangeText={e => setImmobile({ ...immobile, garages: Number(e) })}
                         defaultValue={immobile.garages}
                             placeholder="Garagens"
                             keyboardType="number-pad"
@@ -348,7 +350,7 @@ function ImmobileRegister(props) {
                                 marginBottom: 8
                             }}
                         />
-                        <TextInput onChangeText={e => setImmobile({ ...immobile, size: e })}
+                        <TextInput onChangeText={e => setImmobile({ ...immobile, size: Number(e) })}
                         defaultValue={immobile.size}
                             placeholder="Tamanho"
                             keyboardType="number-pad"
@@ -383,6 +385,37 @@ function ImmobileRegister(props) {
                         mode="BADGE"
                         badgeDotColors='#197B5C'
                     />
+                    <View style={{
+                        flexDirection: "row",
+                        justifyContent: 'space-between'
+                    }}>
+                        <TextInput onChangeText={e => setImmobile({ ...immobile, latitude: Number(e) })}
+                        defaultValue={immobile.latitude}
+                            placeholder="Latitude"
+                            placeholderTextColor='#000'
+                            style={{
+                                flex: 1,
+                                backgroundColor: '#fff',
+                                borderRadius: 10,
+                                paddingHorizontal: 15,
+                                marginBottom: 8,
+                                marginRight: 5
+                            }}
+                        />
+                        <TextInput onChangeText={e => setImmobile({ ...immobile, longitude: Number(e) })}
+                        defaultValue={immobile.longitude}
+                            placeholder="Longitude"
+                            placeholderTextColor='#000'
+                            style={{
+                                flex: 1,
+                                backgroundColor: '#fff',
+                                borderRadius: 10,
+                                paddingHorizontal: 15,
+                                marginBottom: 8
+                            }}
+                        />
+                    </View>
+                    <Text style={{ marginBottom: 8 }}>*Consiga essas informações no google maps.</Text>
                     <TouchableOpacity onPress={() => handleSelectImages()}
                         style={{
                             backgroundColor: '#fff',
