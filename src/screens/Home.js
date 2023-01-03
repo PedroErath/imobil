@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, LogBox } from "react-native";
 import BannerHomeTop from "../components/BannerHomeTop";
 import SearchBar from "../components/SerchBar";
 import ButtonCategory from "../components/ButtonCategory";
@@ -8,6 +8,11 @@ import CardImmobile from "../components/CardImmobile";
 import TitleSectionCardImmobile from "../components/TitleSectionCardImmobile";
 
 function Home(props) {
+
+  LogBox.ignoreLogs([
+    'Non-serializable values were found in the navigation state',
+  ]);
+
 
   const [immobiles, setImmobiles] = useState([])
   const [search, setSearch] = useState('')

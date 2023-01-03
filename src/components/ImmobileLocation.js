@@ -4,7 +4,6 @@ import MapView, {Marker, Circle} from "react-native-maps";
 
 
 function ImmobileLocation(props) {
-    console.log(props.maplocation)
     return (
         <View style={{
             paddingHorizontal: 23,

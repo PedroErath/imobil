@@ -10,7 +10,7 @@ function ImagesCarouselImmobile(props) {
 
     useEffect(() => {
         getImagesFromStorage()
-    }, [])
+    }, [props])
 
     function getImagesFromStorage() {
         const directoryRereference = storage().ref(`immobiles/${props.id}/`)

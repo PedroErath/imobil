@@ -59,6 +59,7 @@ function ImmobileRegister(props) {
     }
 
     function Register() {
+        console.log(immobile)
         if (immobile.title &&
             immobile.address &&
             immobile.district &&
@@ -91,12 +92,12 @@ function ImmobileRegister(props) {
                     restrooms: immobile.restrooms,
                     garages: immobile.garages,
                     size: immobile.size,
-                    maplocation: {latitude: immobile.latitude, longitude: immobile.longitude},
+                    maplocation: { latitude: immobile.latitude, longitude: immobile.longitude },
                     amenities: amenities,
                     realtor: userLogged.uid
                 })
                 .then((doc) => {
-                    for(let i = 0; i < immobileImages.length ; i++){
+                    for (let i = 0; i < immobileImages.length; i++) {
                         let path = `immobiles/${doc.id}/${doc.id}-${i}.jpg`
                         uploadImageToStorage(path, i)
                     }
@@ -184,7 +185,7 @@ function ImmobileRegister(props) {
                         justifyContent: 'space-between'
                     }}>
                         <TextInput onChangeText={e => setImmobile({ ...immobile, address: e })}
-                        defaultValue={immobile.address}
+                            defaultValue={immobile.address}
                             placeholder="Rua, Número"
                             placeholderTextColor='#000'
                             style={{
@@ -197,7 +198,7 @@ function ImmobileRegister(props) {
                             }}
                         />
                         <TextInput onChangeText={e => setImmobile({ ...immobile, district: e })}
-                        defaultValue={immobile.district}
+                            defaultValue={immobile.district}
                             placeholder="Bairro"
                             placeholderTextColor='#000'
                             style={{
@@ -233,8 +234,8 @@ function ImmobileRegister(props) {
                         flexDirection: "row",
                         justifyContent: 'space-between'
                     }}>
-                        <TextInput onChangeText={e => setImmobile({ ...immobile, price: Number(e)})}
-                        defaultValue={immobile.price}
+                        <TextInput onChangeText={e => setImmobile({ ...immobile, price: e })}
+                            defaultValue={immobile.price}
                             placeholder="Preço (R$)"
                             keyboardType="number-pad"
                             placeholderTextColor='#000'
@@ -247,8 +248,8 @@ function ImmobileRegister(props) {
                                 marginRight: 5
                             }}
                         />
-                        <TextInput onChangeText={e => setImmobile({ ...immobile, ranking: Number(e) })}
-                        defaultValue={immobile.ranking}
+                        <TextInput onChangeText={e => setImmobile({ ...immobile, ranking: e })}
+                            defaultValue={immobile.ranking}
                             placeholder="Nota"
                             keyboardType="number-pad"
                             placeholderTextColor='#000'
@@ -314,8 +315,8 @@ function ImmobileRegister(props) {
                         flexDirection: "row",
                         justifyContent: 'space-between'
                     }}>
-                        <TextInput onChangeText={e => setImmobile({ ...immobile, bedrooms: Number(e) })}
-                        defaultValue={immobile.bedrooms}
+                        <TextInput onChangeText={e => setImmobile({ ...immobile, bedrooms: e })}
+                            defaultValue={immobile.bedrooms}
                             placeholder="Quartos"
                             keyboardType="number-pad"
                             placeholderTextColor='#000'
@@ -326,8 +327,8 @@ function ImmobileRegister(props) {
                                 marginBottom: 8
                             }}
                         />
-                        <TextInput onChangeText={e => setImmobile({ ...immobile, restrooms: Number(e) })}
-                        defaultValue={immobile.restrooms}
+                        <TextInput onChangeText={e => setImmobile({ ...immobile, restrooms: e })}
+                            defaultValue={immobile.restrooms}
                             placeholder="Banheiros"
                             keyboardType="number-pad"
                             placeholderTextColor='#000'
@@ -338,8 +339,8 @@ function ImmobileRegister(props) {
                                 marginBottom: 8
                             }}
                         />
-                        <TextInput onChangeText={e => setImmobile({ ...immobile, garages: Number(e) })}
-                        defaultValue={immobile.garages}
+                        <TextInput onChangeText={e => setImmobile({ ...immobile, garages: e })}
+                            defaultValue={immobile.garages}
                             placeholder="Garagens"
                             keyboardType="number-pad"
                             placeholderTextColor='#000'
@@ -350,8 +351,8 @@ function ImmobileRegister(props) {
                                 marginBottom: 8
                             }}
                         />
-                        <TextInput onChangeText={e => setImmobile({ ...immobile, size: Number(e) })}
-                        defaultValue={immobile.size}
+                        <TextInput onChangeText={e => setImmobile({ ...immobile, size: e })}
+                            defaultValue={immobile.size}
                             placeholder="Tamanho"
                             keyboardType="number-pad"
                             placeholderTextColor='#000'
@@ -390,9 +391,10 @@ function ImmobileRegister(props) {
                         justifyContent: 'space-between'
                     }}>
                         <TextInput onChangeText={e => setImmobile({ ...immobile, latitude: Number(e) })}
-                        defaultValue={immobile.latitude}
+                            defaultValue={immobile.latitude}
                             placeholder="Latitude"
                             placeholderTextColor='#000'
+                            keyboardType="number-pad"
                             style={{
                                 flex: 1,
                                 backgroundColor: '#fff',
@@ -403,9 +405,10 @@ function ImmobileRegister(props) {
                             }}
                         />
                         <TextInput onChangeText={e => setImmobile({ ...immobile, longitude: Number(e) })}
-                        defaultValue={immobile.longitude}
+                            defaultValue={immobile.longitude}
                             placeholder="Longitude"
                             placeholderTextColor='#000'
+                            keyboardType="number-pad"
                             style={{
                                 flex: 1,
                                 backgroundColor: '#fff',
