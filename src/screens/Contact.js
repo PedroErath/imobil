@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, ImageBackground, TouchableOpacity, TextInput, Linking } from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import MaskInput from "react-native-mask-input";
+import MaskInput, { Masks } from "react-native-mask-input";
 
 function Contact() {
 
@@ -61,7 +61,7 @@ function Contact() {
                         placeholder="Telefone"
                         keyboardType="phone-pad"
                         placeholderTextColor='#000'
-                        mask={['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+                        mask={Masks.BRL_PHONE}
                         style={{
                             backgroundColor: '#fff',
                             width: '100%',

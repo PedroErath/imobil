@@ -10,12 +10,12 @@ function ImmobileRealtor(props) {
 
     useEffect(() => {
         props.realtor ? GetRealtorPerfilAndImage() : null
-        firestore().collection('users').doc(props.realtor).get()
     }, [])
 
     async function GetRealtorPerfilAndImage () {
         const realtorPerfil = await firestore().collection('users').doc(props.realtor).get()
-        const realtorImageURL = await storage().ref(realtorPerfil.data().photoURL).getDownloadURL()
+        const realtorImageURL = realtorPerfil.data().photoURL ? await storage().ref(realtorPerfil.data().photoURL).getDownloadURL() : null
+        
         setRealtor(realtorPerfil.data())
         setImageRealtor(realtorImageURL)
     }

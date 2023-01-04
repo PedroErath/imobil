@@ -75,7 +75,7 @@ function CardImmobile(props) {
                             fontFamily: 'Montserrat-Bold',
                             color: 'black'
                         }}>
-                            R${props.immobile.price}
+                            {props.immobile.price}
                         </Text>
                         <Text style={{
                             fontFamily: 'Montserrat-Bold',

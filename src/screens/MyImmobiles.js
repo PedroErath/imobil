@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, LogBox } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import BannerHomeTop from "../components/BannerHomeTop";
@@ -9,6 +9,10 @@ import CardImmobile from "../components/CardImmobile";
 
 function MyImmobiles(props) {
 
+    LogBox.ignoreLogs([
+        'Non-serializable values were found in the navigation state',
+    ]);
+
     const [myImmobiles, setMyImmobiles] = useState([])
     const [search, setSearch] = useState('')
     const userLogged = auth().currentUser
@@ -17,7 +21,7 @@ function MyImmobiles(props) {
         firestore().collection('properties').where('realtor', '==', userLogged.uid).onSnapshot((querySnapshot) => {
             const ImmobilesArray = []
             querySnapshot.docs.map((doc) => {
-                
+
                 if (doc.data().title.indexOf(search) >= 0) {
                     ImmobilesArray.push(doc)
                 }

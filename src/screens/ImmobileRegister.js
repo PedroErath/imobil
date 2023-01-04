@@ -5,6 +5,7 @@ import ImageCropPicker from "react-native-image-crop-picker";
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import auth from '@react-native-firebase/auth';
+import MaskInput, {Masks} from "react-native-mask-input";
 
 function ImmobileRegister(props) {
 
@@ -26,6 +27,7 @@ function ImmobileRegister(props) {
         { label: 'Cozinha Americana', value: 'Cozinha Americana' },
     ])
 
+    console.log(immobile.price)
     //Select Negotiation Type
     const [negotiationType, setNegotiationType] = useState([])
     const [negotiationTypeOpen, setNegotiationTypeOpen] = useState(false)
@@ -234,11 +236,12 @@ function ImmobileRegister(props) {
                         flexDirection: "row",
                         justifyContent: 'space-between'
                     }}>
-                        <TextInput onChangeText={e => setImmobile({ ...immobile, price: e })}
-                            defaultValue={immobile.price}
+                        <MaskInput onChangeText={(masked, unmasked) => setImmobile({ ...immobile, price: masked })}
+                            value={immobile.price}
                             placeholder="Preço (R$)"
                             keyboardType="number-pad"
                             placeholderTextColor='#000'
+                            mask={Masks.BRL_CURRENCY}
                             style={{
                                 flex: 1,
                                 backgroundColor: '#fff',
