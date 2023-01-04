@@ -34,7 +34,7 @@ function Immobile(props) {
                 </View>
             </ScrollView>
 
-            <BottomButton />
+            <BottomButton {...props.route.params.immobile}/>
 
         </View>
     )

@@ -1,7 +1,33 @@
-import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import React ,{useState, useEffect} from "react";
+import { View, Text, TouchableOpacity, Linking } from "react-native";
+import firestore from '@react-native-firebase/firestore'
 
-function BottomButton() {
+function BottomButton(props) {
+
+    const [realtor, setRealtor] = useState()
+
+    useEffect(() => {
+        firestore().collection('users').doc(props.realtor).get()
+            .then(doc => {
+                setRealtor(doc.data())
+            })
+            .catch(erro => {
+                console.log(`Erro get Realtor for senda whatsapp message: ${erro}`)
+            })
+    }, [])
+
+    function sendMessageToWhatsapp() {
+        const msg = `Olá, gostaria de agendar uma visita a um imóvel%0A%0AImóvel: ${props.title}%0A%0Alocalização: ${props.address}, ${props.district} - ${props.city}%0A%0ACorretor Responsável: ${realtor.name}`
+    
+        Linking.openURL(`whatsapp://send?text=${msg}&phone=+5551998593383`)
+            .then(result => {
+                
+            })
+            .catch(erro => {
+                console.log(`Erro send message to whatsApp in immobile: ${erro}`)
+            })
+    }
+
     return (
         <View style={{
             position: "absolute",
@@ -21,12 +47,13 @@ function BottomButton() {
                     fontFamily: 'Montserrat-Bold',
                     color: '#000',
                     fontSize: 16
-                }}>R$100.000 |<Text style={{
+                }}>{props.price} | <Text style={{
                     fontFamily: 'Montserrat-Regular',
                     fontSize: 16,
                     color: '#f00'
-                }}> Venda </Text></Text>
-                <TouchableOpacity style={{
+                }}>{props.negotiationtype}</Text></Text>
+                <TouchableOpacity onPress={() => sendMessageToWhatsapp()}
+                style={{
                     backgroundColor: '#197B5C',
                     padding: 12,
                     borderRadius: 10,

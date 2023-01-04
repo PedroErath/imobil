@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, ImageBackground, TouchableOpacity, TextInput, Linking } from "react-native";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaskInput from "react-native-mask-input";
 
 function Contact() {
+
+    const [inputValeus, setInputValues] = useState({})
+
     return (
         <View style={{
             flex: 1
@@ -31,8 +35,9 @@ function Contact() {
                     }}>Para entrar em contato pelo <Text style={{
                         color: '#197B5C',
                         fontFamily: 'Montserrat-Bold',
-                    }}>WhatsApp</Text> preencha o formulário abaixo, logo você receberá uma mensagem de nossa equipe.</Text>
-                    <TextInput placeholder="Nome"
+                    }}>WhatsApp</Text> preencha o formulário abaixo, logo nossa equipe retornará sua mensagem.</Text>
+                    <TextInput onChangeText={e => setInputValues({ ...inputValeus, name: e })}
+                        placeholder="Nome"
                         placeholderTextColor='#000'
                         style={{
                             backgroundColor: '#fff',
@@ -41,7 +46,8 @@ function Contact() {
                             paddingHorizontal: 15,
                             marginBottom: 8
                         }} />
-                    <TextInput placeholder="Email"
+                    <TextInput onChangeText={e => setInputValues({ ...inputValeus, email: e })}
+                        placeholder="Email"
                         placeholderTextColor='#000'
                         style={{
                             backgroundColor: '#fff',
@@ -50,9 +56,12 @@ function Contact() {
                             paddingHorizontal: 15,
                             marginBottom: 8
                         }} />
-                    <TextInput placeholder="Telefone"
+                    <MaskInput onChangeText={(masked, unmasked) => setInputValues({ ...inputValeus, phoneMasked: masked, phoneUnmasked: unmasked })}
+                        value={inputValeus.phoneMasked}
+                        placeholder="Telefone"
                         keyboardType="phone-pad"
                         placeholderTextColor='#000'
+                        mask={['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
                         style={{
                             backgroundColor: '#fff',
                             width: '100%',
@@ -61,14 +70,15 @@ function Contact() {
                             marginBottom: 8
                         }} />
 
-                    <TouchableOpacity style={{
-                        width: '100%',
-                        backgroundColor: '#197B5C',
-                        padding: 15,
-                        borderRadius: 10,
-                        alignItems: 'center',
-                        marginBottom: 20
-                    }}>
+                    <TouchableOpacity
+                        style={{
+                            width: '100%',
+                            backgroundColor: '#197B5C',
+                            padding: 15,
+                            borderRadius: 10,
+                            alignItems: 'center',
+                            marginBottom: 20
+                        }}>
                         <Text style={{
                             fontFamily: 'Montserrat-Bold',
                             fontSize: 20,
