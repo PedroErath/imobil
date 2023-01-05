@@ -19,6 +19,7 @@ function Tab() {
 
     const [userLogged, setUserLogged] = useState()
     const [initializing, setInitializing] = useState(true)
+    const userAlterated = auth().currentUser
 
     async function onAuthStateChanged(user) {
 
@@ -34,7 +35,7 @@ function Tab() {
     useEffect(() => {
         const validation = auth().onAuthStateChanged(onAuthStateChanged);
         return validation
-    }, [])
+    }, [userAlterated])
 
     if (!initializing) {
         return (

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ImageBackground, ActivityIndicator } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import CheckBox from "@react-native-community/checkbox";
@@ -10,13 +10,15 @@ function UserRegister(props) {
     const [user, setUser] = useState({})
     const [responseMessage, setResponseMessage] = useState({})
     const [toggleCheckBox, setToggleCheckBox] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     function Register() {
+        setLoading(true)
         if (user.email && user.password && user.name)
             auth()
                 .createUserWithEmailAndPassword(user.email, user.password)
                 .then((userCredential) => {
-                    userCredential.user.updateProfile({displayName: user.name})
+                    userCredential.user.updateProfile({ displayName: user.name })
                     firestore().collection('users').doc(userCredential.user.uid).set({
                         uid: userCredential.user.uid,
                         name: user.name,
@@ -25,9 +27,10 @@ function UserRegister(props) {
                     })
                         .then(() => {
                             toggleCheckBox ? props.navigation.navigate('Usuarios')
-                            : props.navigation.navigate('Perfil')
+                                : props.navigation.navigate('Perfil')
                             setUser({})
                             setResponseMessage({})
+                            setLoading(false)
                         })
                 })
                 .catch(error => {
@@ -36,11 +39,13 @@ function UserRegister(props) {
                             success: false,
                             msg: 'Este email ja está em uso'
                         })
+                        setLoading(false)
                     } else {
                         setResponseMessage({
                             success: false,
                             msg: 'Email e/ou senha inválidos'
                         })
+                        setLoading(false)
                     }
                 })
         else {
@@ -48,6 +53,7 @@ function UserRegister(props) {
                 success: false,
                 msg: 'Informe email, senha e nome'
             })
+            setLoading(false)
         }
     }
 
@@ -135,23 +141,25 @@ function UserRegister(props) {
                         marginBottom: 5
                     }}>{responseMessage.msg}</Text>
 
-                    <TouchableOpacity onPress={Register}
-                        style={{
-                            width: '100%',
-                            backgroundColor: '#197B5C',
-                            padding: 15,
-                            borderRadius: 10,
-                            alignItems: 'center',
-                            elevation: 15,
-                            shadowColor: '#000'
-                        }}>
-                        <Text
+                    {loading ? <ActivityIndicator size='large' /> :
+                        <TouchableOpacity onPress={Register}
                             style={{
-                                fontFamily: 'Montserrat-Bold',
-                                fontSize: 20,
-                                color: '#fff'
-                            }}>Registrar</Text>
-                    </TouchableOpacity>
+                                width: '100%',
+                                backgroundColor: '#197B5C',
+                                padding: 15,
+                                borderRadius: 10,
+                                alignItems: 'center',
+                                elevation: 15,
+                                shadowColor: '#000'
+                            }}>
+                            <Text
+                                style={{
+                                    fontFamily: 'Montserrat-Bold',
+                                    fontSize: 20,
+                                    color: '#fff'
+                                }}>Registrar</Text>
+                        </TouchableOpacity>
+                    }
 
                 </View>
                 <LogoutButton {...props} />

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ImageBackground, ActivityIndicator } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore'
 
@@ -8,8 +8,10 @@ function RealtorLogin(props) {
     const [user, setUser] = useState({})
     const [responseMessage, setResponseMessage] = useState({})
     const [passwordReset, setPasswordReset] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     function Login() {
+        setLoading(true)
         if (user.email && user.password)
             auth()
                 .signInWithEmailAndPassword(user.email, user.password)
@@ -19,46 +21,53 @@ function RealtorLogin(props) {
                         : props.navigation.navigate('Meus Imoveis')
                     setUser({})
                     setResponseMessage({})
+                    setLoading(false)
                 })
                 .catch(error => {
                     setResponseMessage({
                         success: false,
                         msg: 'Email e/ou senha incorretos'
                     })
+                    setLoading(false)
                 })
         else {
             setResponseMessage({
                 success: false,
                 msg: 'Informe email e senha'
             })
+            setLoading(false)
         }
     }
 
     function SendPasswordResetEmail() {
-        if(user.email){
+        setLoading(true)
+        if (user.email) {
             auth().sendPasswordResetEmail(user.email)
-            .then(() => {
-                setResponseMessage({
-                    success: true,
-                    msg: 'Enviamos um email para recuperar sua senha'
+                .then(() => {
+                    setResponseMessage({
+                        success: true,
+                        msg: 'Enviamos um email para recuperar sua senha'
+                    })
+                    setTimeout(() => {
+                        setPasswordReset(false)
+                        setResponseMessage({})
+                    }, 3000)
+                    setLoading(false)
                 })
-                setTimeout(() => {
-                    setPasswordReset(false)
-                    setResponseMessage({})
-                }, 3000)
-            })
-            .catch((erro) => {
-                console.log(`Erro Recuperação de senha: ${erro}`)
-                setResponseMessage({
-                    success: false,
-                    msg: 'Algo deu errado, tente novamente mais tarde'
+                .catch((erro) => {
+                    console.log(`Erro Recuperação de senha: ${erro}`)
+                    setResponseMessage({
+                        success: false,
+                        msg: 'Algo deu errado, tente novamente mais tarde'
+                    })
+                    setLoading(false)
                 })
-            })
-        }else{
+        } else {
             setResponseMessage({
                 success: false,
                 msg: 'Informe seu email'
             })
+            setLoading(false)
         }
     }
 
@@ -124,22 +133,24 @@ function RealtorLogin(props) {
                         textAlign: 'center',
                         marginBottom: 5
                     }}>{responseMessage.msg}</Text>
-                    <TouchableOpacity onPress={!passwordReset ? Login : SendPasswordResetEmail}
-                        style={{
-                            width: '100%',
-                            backgroundColor: '#197B5C',
-                            padding: 15,
-                            borderRadius: 10,
-                            alignItems: 'center',
-                            elevation: 15,
-                            shadowColor: '#000'
-                        }}>
-                        <Text style={{
-                            fontFamily: 'Montserrat-Bold',
-                            fontSize: 20,
-                            color: '#fff'
-                        }}>{!passwordReset ? 'Entrar' : 'Enviar email'}</Text>
-                    </TouchableOpacity>
+                    {loading ? <ActivityIndicator size='large'/> :
+                        <TouchableOpacity onPress={!passwordReset ? Login : SendPasswordResetEmail}
+                            style={{
+                                width: '100%',
+                                backgroundColor: '#197B5C',
+                                padding: 15,
+                                borderRadius: 10,
+                                alignItems: 'center',
+                                elevation: 15,
+                                shadowColor: '#000'
+                            }}>
+                            <Text style={{
+                                fontFamily: 'Montserrat-Bold',
+                                fontSize: 20,
+                                color: '#fff'
+                            }}>{!passwordReset ? 'Entrar' : 'Enviar email'}</Text>
+                        </TouchableOpacity>
+                    }
                     <TouchableOpacity onPress={() => {
                         setPasswordReset(!passwordReset)
                     }}

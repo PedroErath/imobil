@@ -6,6 +6,32 @@ import MaskInput, { Masks } from "react-native-mask-input";
 function Contact() {
 
     const [inputValeus, setInputValues] = useState({})
+    const [responseMessage, setResponseMessage] = useState({})
+
+    function sendMessageToWhatsapp() {
+        if (
+            inputValeus.name &&
+            inputValeus.email &&
+            inputValeus.phone
+        ) {
+            Linking.openURL('whatsapp://send?text=Olá&phone=+5551998593383')
+                .then(result => {
+                    console.log(`Open whatsapp from contact: ${result}`)
+                })
+                .catch(erro => {
+                    setResponseMessage({
+                        success: false,
+                        txt: 'Algo deu errado, tente novamente mais tarde.'
+                    })
+                    console.log(`Erro send message to whatsApp in immobile: ${erro}`)
+                })
+        } else {
+            setResponseMessage({
+                success: false,
+                txt: 'Preencha todos os campos'
+            })
+        }
+    }
 
     return (
         <View style={{
@@ -70,7 +96,13 @@ function Contact() {
                             marginBottom: 8
                         }} />
 
-                    <TouchableOpacity
+                    <Text style={{
+                        color: responseMessage.success ? '#197B5C' : 'red',
+                        textAlign: 'center',
+                        marginBottom: 5
+                    }}>{responseMessage.txt}</Text>
+
+                    <TouchableOpacity onPress={() => sendMessageToWhatsapp()}
                         style={{
                             width: '100%',
                             backgroundColor: '#197B5C',
