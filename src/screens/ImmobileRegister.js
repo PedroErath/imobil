@@ -61,7 +61,6 @@ function ImmobileRegister(props) {
     }
 
     function Register() {
-        console.log(immobile)
         if (immobile.title &&
             immobile.address &&
             immobile.district &&

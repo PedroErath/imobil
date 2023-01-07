@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, Text, TextInput, Image, ImageBackground, Alert, LogBox} from 'react-native';
+import { View, TouchableOpacity, Text, TextInput, Image, ImageBackground, Alert, LogBox } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
@@ -8,6 +8,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import LogoutButton from '../components/LogoutButton';
 
 function RealtorProfile(props) {
+
+    console.log(props)
 
     LogBox.ignoreLogs([
         'Possible Unhandled Promise Rejection',
@@ -22,12 +24,17 @@ function RealtorProfile(props) {
         GetImageFromProfile()
         userLogged ? setInputUserName({ editable: false, name: userLogged.displayName }) : null
         profileImage.fileName ? UploadImageToStorage() : null
-    }, [profileImage, userLogged])
+    }, [profileImage.fileName, userLogged])
 
     async function GetImageFromProfile() {
         if (userLogged.photoURL) {
-            const url = await storage().ref(userLogged.photoURL).getDownloadURL()
-            setProfileImage({ uri: url })
+            await storage().ref(userLogged.photoURL).getDownloadURL()
+                .then((url) => {
+                    setProfileImage({ uri: url })
+                })
+                .catch(error => {
+                    console.log(`Error get image profile: ${error}`)
+                })
         }
     }
 
@@ -105,9 +112,9 @@ function RealtorProfile(props) {
                             setResponseMessage({})
                         }, 3000)
                     })
-                    .catch((erro) => {
-                        console.log(`Erro Update PhotoURL autherntication:${erro}`)
-                    })
+                        .catch((erro) => {
+                            console.log(`Erro Update PhotoURL autherntication:${erro}`)
+                        })
                 })
                     .catch((error) => {
                         console.log(`Erro Update PhotoURL firestore:${error}`)
@@ -178,7 +185,7 @@ function RealtorProfile(props) {
                 }}>
                     <TextInput onChangeText={e => setInputUserName({ ...inputUserName, name: e })}
                         editable={inputUserName.editable}
-                        defaultValue={inputUserName.name}
+                        defaultValue={inputUserName.name || props.route.params.user.name}
                         style={{
                             fontFamily: 'Montserrat-Bold',
                             color: '#fff',

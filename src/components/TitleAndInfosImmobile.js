@@ -49,7 +49,7 @@ function TitleAndInfosImmobile(props) {
                 }}>
                     <Text style={{
                         fontFamily: 'Montserrat-Bold',
-                        fontSize: 20,
+                        fontSize: 16,
                         color: '#fff'
                     }}>{props.price}</Text>
                     <Text style={{

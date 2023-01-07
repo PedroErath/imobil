@@ -46,10 +46,10 @@ function BottomButton(props) {
                 <Text style={{
                     fontFamily: 'Montserrat-Bold',
                     color: '#000',
-                    fontSize: 16
+                    fontSize: 14
                 }}>{props.price} | <Text style={{
                     fontFamily: 'Montserrat-Regular',
-                    fontSize: 16,
+                    fontSize: 14,
                     color: '#f00'
                 }}>{props.negotiationtype}</Text></Text>
                 <TouchableOpacity onPress={() => sendMessageToWhatsapp()}

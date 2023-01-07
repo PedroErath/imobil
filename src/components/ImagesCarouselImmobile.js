@@ -19,8 +19,13 @@ function ImagesCarouselImmobile(props) {
             .then(async (list) => {
                 const arrayImages = []
                 for (let i = 0; i < list.items.length; i++) {
-                    let url = await storage().ref(list.items[i].fullPath).getDownloadURL()
-                    arrayImages.push(url)
+                    await storage().ref(list.items[i].fullPath).getDownloadURL()
+                        .then((url) => {
+                            arrayImages.push(url)
+                        })
+                        .catch(error => {
+                            console.log(`Error get image to carousel: ${error}`)
+                        })
                 }
                 setAllImages(arrayImages)
                 setSelectedImage(arrayImages[0])

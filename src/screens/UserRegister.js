@@ -27,7 +27,7 @@ function UserRegister(props) {
                     })
                         .then(() => {
                             toggleCheckBox ? props.navigation.navigate('Usuarios')
-                                : props.navigation.navigate('Perfil')
+                                : props.navigation.navigate('Perfil', {user})
                             setUser({})
                             setResponseMessage({})
                             setLoading(false)
@@ -126,13 +126,14 @@ function UserRegister(props) {
                         alignItems: "center"
                     }}>
                         <CheckBox
+                            tintColors={{true: '#197B5C', false: '#fff'}}
                             disabled={false}
                             value={toggleCheckBox}
                             onValueChange={(newValue) => setToggleCheckBox(newValue)}
                         />
                         <Text style={{
                             fontFamily: 'Montserrat-Regular',
-                            color: '#000'
+                            color: '#FFF'
                         }}>Admin ?</Text>
                     </View>
                     <Text style={{

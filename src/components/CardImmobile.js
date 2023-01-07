@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, LogBox } from "react-native";
 import InfosIconsImmobile from "./InfosIconsImmobile";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import storage from '@react-native-firebase/storage'
@@ -12,9 +12,14 @@ function CardImmobile(props) {
         GetImageBanner()
     },[])
 
-    async function GetImageBanner() {
-        const url = await storage().ref(`immobiles/${props.id}/${props.id}-0.jpg`).getDownloadURL()
-        setImageBanner(url)
+    function GetImageBanner() {
+        storage().ref(`immobiles/${props.id}/${props.id}-0.jpg`).getDownloadURL()
+            .then((url) => {
+                setImageBanner(url)
+            })
+            .catch(error => {
+                console.log(`Error GetImageBanner: ${error}`)
+            })
     }
 
     return (
