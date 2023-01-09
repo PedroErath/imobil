@@ -121,6 +121,7 @@ function Contact() {
                     <Text style={{
                         fontFamily: 'Montserrat-Bold',
                         textAlign: 'center',
+                        color: '#fff',
                         marginBottom: 8
                     }}>Redes Sociais</Text>
                     <View style={{

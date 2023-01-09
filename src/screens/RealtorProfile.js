@@ -9,8 +9,6 @@ import LogoutButton from '../components/LogoutButton';
 
 function RealtorProfile(props) {
 
-    console.log(props)
-
     LogBox.ignoreLogs([
         'Possible Unhandled Promise Rejection',
     ]);
@@ -21,6 +19,9 @@ function RealtorProfile(props) {
     const [inputUserName, setInputUserName] = useState({})
 
     useEffect(() => {
+        if(props.route.params){
+            setInputUserName({editable: false, name: props.route.params.user.name})
+        }
         GetImageFromProfile()
         userLogged ? setInputUserName({ editable: false, name: userLogged.displayName }) : null
         profileImage.fileName ? UploadImageToStorage() : null
@@ -185,7 +186,7 @@ function RealtorProfile(props) {
                 }}>
                     <TextInput onChangeText={e => setInputUserName({ ...inputUserName, name: e })}
                         editable={inputUserName.editable}
-                        defaultValue={inputUserName.name || props.route.params.user.name}
+                        defaultValue={inputUserName.name}
                         style={{
                             fontFamily: 'Montserrat-Bold',
                             color: '#fff',

@@ -17,7 +17,7 @@ function SearchBar({ SetStateSearchComponent, placeholder, displayFilter }) {
             elevation: 15,
             shadowColor: 'black',
         }}>
-            <MaterialCommunityIcons name="magnify" size={25} color='#fff' />
+            <MaterialCommunityIcons name="magnify" size={25} color='#737373' />
             <TextInput onChangeText={e => SetStateSearchComponent(e)}
                 style={{
                     flex: 1

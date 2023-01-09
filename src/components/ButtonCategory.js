@@ -14,7 +14,7 @@ function ButtonCategory({ SetStateTypeImmobileFilter, icon, name, bgColor }) {
                 backgroundColor: bgColor,
                 borderRadius: 50,
                 padding: 12,
-                elevation: 15,
+                elevation: 10,
                 marginLeft: 8,
                 shadowColor: 'black'
             }}>

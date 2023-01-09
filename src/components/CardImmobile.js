@@ -31,7 +31,6 @@ function CardImmobile(props) {
             width: 267,
             height: 315,
             borderRadius: 5,
-            elevation: 15,
             borderColor: '#000'
         }}>
             <View>
