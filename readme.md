@@ -4,6 +4,12 @@ Projeto de aplicativo para imobiliaria
 
 > Status: **Em desenvolvimento**
 
+<div >
+
+![imobil-app](https://user-images.githubusercontent.com/92051142/211327060-b380bd5c-740b-4ca1-82bd-d5904c01e38e.gif) ![GIF-230109_111827](https://user-images.githubusercontent.com/92051142/211329423-6054f77d-142d-49ac-b770-f989f6773526.gif) ![ezgif com-gif-maker](https://user-images.githubusercontent.com/92051142/211329902-b76513c0-f5bb-4618-b99e-6a9e839aef66.gif)
+
+
+</div>
 
 ## Techs:
 
@@ -50,3 +56,5 @@ Projeto de aplicativo para imobiliaria
 * Rode o projeto no emulador android `npx react-native run-android`
 
 ## Probelmas encontrados
+
+* Carregamento de imagens e dados ao alternar entre telas
