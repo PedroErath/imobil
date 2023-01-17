@@ -29,6 +29,7 @@ Projeto de aplicativo para imobiliaria
 * **📷 Uso de câmera e galeria**
 * **🗺️ Google maps**
 * **💬 Envio de mensagem para o whatsapp**
+* **👥 Dois níveis de usuário**
 
 ## Como executar
 
@@ -54,6 +55,11 @@ Projeto de aplicativo para imobiliaria
 
 * Rode o servidor Node `npm start`
 * Rode o projeto no emulador android `npx react-native run-android`
+
+### **5. Contas funcionais**
+
+* Admin: admin@email.com | 123456
+* Corretor: corretor@email.com | 123456
 
 ## Probelmas encontrados
 
