@@ -50,7 +50,7 @@ Projeto de aplicativo para imobiliaria
 * Emulador android [Genymotion](https://www.genymotion.com/)
 * Emulador android [Android Studio](https://developer.android.com/studio)
 
-### **4. Executar o projeto**
+### **5. Executar o projeto**
 
 * Rode o servidor Node `npm start`
 * Rode o projeto no emulador android `npx react-native run-android`
