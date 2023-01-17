@@ -34,7 +34,7 @@ Projeto de aplicativo para imobiliaria
 
 ### **1. Instale `Node` na sua máquina, por meio [deste link](https://nodejs.org/en/)**
 
-### **2. Faça um clone [desse repositório](https://github.com/rafaballerini/AssistentePessoal.git) na sua máquina:**
+### **2. Faça um clone [desse repositório](https://github.com/PedroErath/imobil.git) na sua máquina:**
 
 * Crie uma pasta no seu computador para esse programa
 * Abra o `git bash` ou `terminal` dentro dessa pasta
