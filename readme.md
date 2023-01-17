@@ -56,7 +56,7 @@ Projeto de aplicativo para imobiliaria
 * Rode o servidor Node `npm start`
 * Rode o projeto no emulador android `npx react-native run-android`
 
-### **5. Contas funcionais**
+### **6. Contas funcionais**
 
 * Admin: admin@email.com | 123456
 * Corretor: corretor@email.com | 123456
